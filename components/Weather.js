@@ -18,7 +18,6 @@ const Weather = (props) => {
   console.log(props);
   return (
     <View style={styles.weather}>
-
       <View style={styles.row}>
         <Image
           style={styles.logo}
@@ -27,9 +26,8 @@ const Weather = (props) => {
           }}
         />
         <Text style={styles.text}>
-          {(props.temperature - 273.15).toFixed(0) + '\u00b0'}
+          {(props.temperature - 273.15).toFixed(0) + "\u00b0"}
         </Text>
-
       </View>
       <TouchableOpacity
         style={styles.refresh}
@@ -61,8 +59,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   text: {
-    paddingHorizontal: 5,
-    fontFamily: 'comic-neue',
+    textShadowColor: "grey",
+    textShadowRadius: 5,
+    fontFamily: "comic-neue",
     fontSize: 50,
   },
 });
