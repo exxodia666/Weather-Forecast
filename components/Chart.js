@@ -16,7 +16,9 @@ import { LineChart } from "react-native-chart-kit";
 //const week = [  "Sunday", "Monday", "Tuesday","Wednesday", "Thursday","Friday", "Saturday",];
 
 const Chart = (props) => {
+
   const week = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Satur"];
+
   const createWeekDaysArray = (day) => {
     const firstDay = day;
     const data = [];
@@ -56,29 +58,31 @@ const Chart = (props) => {
           ],
         }}
         width={Dimensions.get("window").width} // from react-native
-        height={220}
+        height={200}
         yAxisSuffix={"\u2103"}
-        yAxisInterval={1} // optional, defaults to 1
+        yAxisInterval={0.5} // optional, defaults to 1
         chartConfig={{
           propsForLabels: {
             fontSize: "12",
+            fontFamily: 'comic-neue'
           },
-          backgroundColor: "#e26a00",
-          backgroundGradientFrom: "#1488CC",
+          backgroundColor: '#00000000',
+          backgroundGradientFrom: "transparent",
           backgroundGradientTo: "#2B32B2",
+          backgroundGradientFromOpacity: 0.1,
+          backgroundGradientToOpacity: 0.4,
           decimalPlaces: 2, // optional, defaults to 2dp
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           propsForDots: {
-            r: "6",
+            r: "3",
             strokeWidth: "2",
             stroke: "white",
           },
         }}
         style={{
-          marginVertical: 8,
-          padding: 10,
-          //borderRadius: 16,
+
+
         }}
       />
     </View>
@@ -86,11 +90,7 @@ const Chart = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
 });
 
 export default Chart;

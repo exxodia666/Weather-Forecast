@@ -21,16 +21,16 @@ const WeatherStackNavigator = () => {
               <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                 <Item
                   title="Stash"
-                  iconName="md-cloud"
+                  iconName="md-options"
                   onPress={() => {
-                    props.navigation.navigate(routes.Chart);
+                    props.navigation.navigate(routes.Options);
                   }}
                 />
               </HeaderButtons>
             );
           },
           headerStyle: {
-            backgroundColor: "red",
+            backgroundColor: "#0043A4",
           },
           headerTintColor: "#fff",
           headerTitleStyle: {
@@ -39,9 +39,25 @@ const WeatherStackNavigator = () => {
         };
       }}
     >
-      <Stack.Screen name={routes.Start} component={StartScreen} />
-      <Stack.Screen name={routes.Weather} component={WeatherForecastScreen} />
-     
+      <Stack.Screen
+        name={routes.Start}
+        component={StartScreen}
+
+
+      />
+      <Stack.Screen
+        name={routes.Weather}
+        component={WeatherForecastScreen}
+        options={
+          ({ route }) => ({
+            title: route.params.city,
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontFamily: 'comic-neue',
+            },
+          })}
+      />
+
     </Stack.Navigator>
   );
 };

@@ -11,26 +11,6 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-/*
-const daytime = {
-  night
-
-}
-
-const icons = {
-  "broken clouds": "md-partlycloudy",
-  "clear sky": "md-sunny",
-  "overcast clouds": "md-cloud",
-  "few clouds": "md-lightning",
-  "haze": "md-fog",
-  "": "lightning",
-  lightning-rainy
-  sunny
-  snowy-rainy
-  snowy
-};
-*/
-
 const url = (iconName) => `http://openweathermap.org/img/wn/${iconName}@2x.png`;
 
 const Weather = (props) => {
@@ -38,23 +18,18 @@ const Weather = (props) => {
   console.log(props);
   return (
     <View style={styles.weather}>
-      <Text style={styles.text}>
-        {"City: "} {props.city}
-      </Text>
-      <View style={styles.row}>
-        <Text style={styles.text}>
-          {"Temperature: "}
-          {(props.temperature - 273.15).toFixed(2) + "\u2103"}
-        </Text>
-      </View>
 
-      <View>
+      <View style={styles.row}>
         <Image
           style={styles.logo}
           source={{
             uri: url(props.icon),
           }}
         />
+        <Text style={styles.text}>
+          {(props.temperature - 273.15).toFixed(0) + '\u00b0'}
+        </Text>
+
       </View>
       <TouchableOpacity
         style={styles.refresh}
@@ -69,10 +44,7 @@ const Weather = (props) => {
 const styles = StyleSheet.create({
   weather: {
     width: Dimensions.get("window").width,
-    borderRadius: 10,
-    overflow: "hidden",
     padding: 20,
-    elevation: 5,
     alignItems: "center",
     justifyContent: "center",
     //borderColor: "black",
@@ -85,9 +57,13 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   text: {
-    fontSize: 33,
+    paddingHorizontal: 5,
+    fontFamily: 'comic-neue',
+    fontSize: 50,
   },
 });
 

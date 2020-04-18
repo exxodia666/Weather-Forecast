@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, use } from "react-redux";
+import { useDispatch, use, useSelector } from "react-redux";
 import {
   StyleSheet,
   Button,
@@ -11,6 +11,7 @@ import {
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import routes from "../navigation/routes";
 import { Ionicons } from "@expo/vector-icons";
+import { setDayTime } from "../store/actions/daytime";
 //import FetchWeather from "../containers/FetchingData";
 
 /*
@@ -20,6 +21,14 @@ import { Ionicons } from "@expo/vector-icons";
 
 const StartScreen = (props) => {
   const [cityName, setCity] = useState("London");
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setDayTime());
+  }, []);
+  /*
+  const daytime = useSelector(state => state.daytime);
+  console.log(daytime);
+  */
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
