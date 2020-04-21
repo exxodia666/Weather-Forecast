@@ -21,7 +21,9 @@ import { setDayTime } from "../store/actions/daytime";
 
 const StartScreen = (props) => {
   const [cityName, setCity] = useState("London");
+  
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(setDayTime());
   }, []);

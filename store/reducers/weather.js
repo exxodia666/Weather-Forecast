@@ -16,6 +16,7 @@ export default (state = initialState, action) => {
         city: action.data.name,
         icon: action.data.weather[0].icon,
         temperature: action.data.main.temp,
+        fetchTime: action.time
       };
   }
   return state;

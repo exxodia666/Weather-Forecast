@@ -7,6 +7,10 @@ import { ActivityIndicator } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { loadWeather } from "../store/actions/weather";
 import { setDayTime } from "../store/actions/daytime";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Ionicons } from "@expo/vector-icons";
+import WeekForecast from "../components/WeekForecast";
+import { loadForecast } from "../store/actions/forecast";
 
 const WeatherForecastScreen = (props) => {
   const cityName = props.route.params.city;
@@ -15,7 +19,7 @@ const WeatherForecastScreen = (props) => {
 
   const weather = useSelector((state) => state.weather);
   const daytime = useSelector((state) => state.daytime.time);
-
+  //console.log(weather);
 
   const dispatch = useDispatch();
 
@@ -23,18 +27,19 @@ const WeatherForecastScreen = (props) => {
     dispatch(setDayTime());
   }, []);
 
-  console.log(daytime);
+  //console.log(daytime);
   const image = (daytime) ? require('../assets/day.png') : require('../assets/night.png');
 
 
 
-  const fetchWeather = (city) => {
-    dispatch(loadWeather(city));
+  const fetchWeather = () => {
+    dispatch(loadWeather(cityName));
+    dispatch(loadForecast(cityName));
     setIsFetched(true);
   };
 
   useEffect(() => {
-    fetchWeather(cityName);
+    fetchWeather();
   }, [dispatch]);
 
   if (isFetched === false) {
@@ -43,21 +48,36 @@ const WeatherForecastScreen = (props) => {
     return (
 
       <ImageBackground source={image} style={styles.image}>
-        <View style={{ flex: 1 / 2, justifyContent: 'center' }}>
+        <View style={{ flex: 3 / 4, justifyContent: 'center' }}>
           <Weather
             icon={weather.icon}
             city={weather.city}
             temperature={weather.temperature}
-            fetchWeather={() => fetchWeather(cityName)}
+            fetchWeather={() => fetchWeather()}
+            fetchTime={weather.fetchTime}
           />
         </View>
 
-        <View style={{ flex: 1 / 2, justifyContent: 'flex-end' }}>
-          {<Chart />
+        <View style={{ flex: 1 / 4, justifyContent: 'center', }}>
+          {//<Chart />
           }
+          <WeekForecast />
+          {/*
+          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
+            <Text style={{ fontFamily: 'comic-neue' }}>
+              Updated: {weather.fetchTime}
+            </Text>
+            <TouchableOpacity
+              style={styles.refresh}
+              onPress={() => fetchWeather()}
+            >
+              <Ionicons name={"md-refresh"} size={23} />
+            </TouchableOpacity>
+          </View>
+
           <Text style={{ fontFamily: 'comic-neue' }}>
             Powered by: Open Weather
-          </Text>
+          </Text>*/}
         </View>
       </ImageBackground>
     );
@@ -65,6 +85,9 @@ const WeatherForecastScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
+  refresh: {
+    padding: 10,
+  },
   image: {
     paddingTop: 10,
     flex: 1,

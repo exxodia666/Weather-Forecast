@@ -14,8 +14,8 @@ import { LinearGradient } from "expo-linear-gradient";
 const url = (iconName) => `http://openweathermap.org/img/wn/${iconName}@2x.png`;
 
 const Weather = (props) => {
-  console.log("props");
-  console.log(props);
+  //console.log("props");
+ // console.log(props);
   return (
     <View style={styles.weather}>
       <View style={styles.row}>
@@ -25,16 +25,10 @@ const Weather = (props) => {
             uri: url(props.icon),
           }}
         />
-        <Text style={styles.text}>
+        <Text style={{ ...styles.text, ...styles.temperature }}>
           {(props.temperature - 273.15).toFixed(0) + "\u00b0"}
         </Text>
       </View>
-      <TouchableOpacity
-        style={styles.refresh}
-        onPress={() => props.fetchWeather}
-      >
-        <Ionicons name={"md-refresh"} size={23} />
-      </TouchableOpacity>
     </View>
   );
 };
@@ -62,8 +56,13 @@ const styles = StyleSheet.create({
     textShadowColor: "grey",
     textShadowRadius: 5,
     fontFamily: "comic-neue",
-    fontSize: 50,
   },
+  refresh: {
+    padding: 10
+  },
+  temperature: {
+    fontSize: 50,
+  }
 });
 
 export default Weather;

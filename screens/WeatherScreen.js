@@ -10,7 +10,7 @@ const WeatherScreen = (props) => {
   const [isFetched, setIsFetched] = useState(false);
   const weather = useSelector((state) => state.weather);
   const dispatch = useDispatch();
-  console.log(weather);
+  //console.log(weather);
   
   const fetchWeather = (city) => {
     dispatch(loadWeather(city));
