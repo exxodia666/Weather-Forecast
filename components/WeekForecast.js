@@ -13,16 +13,18 @@ import { LineChart } from "react-native-chart-kit";
 import { withTheme } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
+import weatherSort from "../utils/weatherSort";
 
 //const url = (iconName) => `http://openweathermap.org/img/wn/${iconName}@2x.png`;
 
 //const week = [  "Sunday", "Monday", "Tuesday","Wednesday", "Thursday","Friday", "Saturday",];
 
 const WeekForecast = (props) => {
-    const weather = useSelector(state => state.forecast.weather);
+    const weather = weatherSort(useSelector(state => state.forecast.weather));
+    
     const week = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Satur"];
 
-    console.log(weather);
+    //console.log(weather);
 
 
     const url = (iconName) => `http://openweathermap.org/img/wn/${iconName}@2x.png`;
