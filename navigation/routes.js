@@ -2,7 +2,7 @@ const routes = {
   Start: "Start",
   Weather: "Weather",
   Chart: "Chart",
-  // Start: 'Start',
+  Settings: "Settings",
   // Start: 'Start',
 };
 export default routes;

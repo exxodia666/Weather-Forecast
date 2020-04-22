@@ -21,7 +21,6 @@ import weatherSort from "../utils/weatherSort";
 //const week = [  "Sunday", "Monday", "Tuesday","Wednesday", "Thursday","Friday", "Saturday",];
 
 const WeekForecast = (props) => {
-
   const weather = weatherSort(useSelector((state) => state.forecast.weather));
 
   const week = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Satur"];
@@ -53,7 +52,7 @@ const WeekForecast = (props) => {
     let counter = 0;
     return Object.keys(item).map((key) => {
       // console.log(item[key]);
-      let daytime = 'Morning';
+      let daytime = "Morning";
 
       if (counter === 2) {
         daytime = "Night";
@@ -75,32 +74,35 @@ const WeekForecast = (props) => {
                 uri: url(item[key].icon),
               }}
             />
-            <Text>{item[key].temperature}</Text>
+            <Text>
+              {item[key].temperature} {"\u00b0"}
+            </Text>
           </View>
         );
       }
     });
-  }
+  };
 
   const weekMap = (week) => {
     week.pop();
     //console.log(week);
     return week.map((element) => {
-      return <View style={styles.week}><Text>{element}</Text></View>;
+      return (
+        <View style={styles.week}>
+          <Text>{element}</Text>
+        </View>
+      );
     });
-  }
+  };
 
   return (
     <View style={styles.container}>
+      <View style={styles.row}>{weekMap(labels)}</View>
       <View style={styles.row}>
-        {weekMap(labels)}
+        {weather.map((item) => (
+          <View style={styles.column}>{func(item)}</View>
+        ))}
       </View>
-      <View style={styles.row}>
-        {weather.map((item) => <View style={styles.column}>
-          {func(item)}
-        </View>)}
-      </View>
-
     </View>
   );
 };
@@ -110,9 +112,9 @@ const styles = StyleSheet.create({
     flex: 1 / 5,
     justifyContent: "center",
     alignItems: "center",
-    borderTopStartRadius: 25,
-    borderWidth: 0.25,
-    borderColor: "black",
+    // elevationborderTopStartRadius: 25,
+    //borderColorborderWidth: 0.25,
+    //borderColor: "black",
   },
   logo: {
     width: 20,
@@ -123,7 +125,7 @@ const styles = StyleSheet.create({
     //justifyContent: 'space-evenly',
     width: Dimensions.get("window").width,
     //backgroundColor: 'yellow',
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   container: {
     // height: "100%",
@@ -136,8 +138,8 @@ const styles = StyleSheet.create({
     //flexDirection: "row",
   },
   day: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
    // elevation: 5,
     overflow: "hidden",
     padding: 1,
@@ -145,7 +147,7 @@ const styles = StyleSheet.create({
     //height: "28%",
     //flex: 1 / 5,
     //borderRadius: 10,
-    //borderWidth: 1,
+    //borderWidth: 0.25,
     //borderColor: "black",
   },
   column: {

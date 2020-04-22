@@ -16,7 +16,6 @@ import { LineChart } from "react-native-chart-kit";
 //const week = [  "Sunday", "Monday", "Tuesday","Wednesday", "Thursday","Friday", "Saturday",];
 
 const Chart = (props) => {
-
   const week = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Satur"];
 
   const createWeekDaysArray = (day) => {
@@ -37,7 +36,12 @@ const Chart = (props) => {
   const labels = createWeekDaysArray(new Date().getDay()).map(
     (item) => week[item]
   );
-
+  if (props.data.length === 5) {
+    console.log(props.data.length);
+    labels.pop;
+    labels.pop;
+    console.log(labels);
+  }
   return (
     <View style={styles.container}>
       <LineChart
@@ -45,15 +49,7 @@ const Chart = (props) => {
           labels: labels,
           datasets: [
             {
-              data: [
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-              ],
+              data: props.data,
             },
           ],
         }}
@@ -64,9 +60,9 @@ const Chart = (props) => {
         chartConfig={{
           propsForLabels: {
             fontSize: "12",
-            fontFamily: 'comic-neue'
+            fontFamily: "comic-neue",
           },
-          backgroundColor: '#00000000',
+          backgroundColor: "#00000000",
           backgroundGradientFrom: "transparent",
           backgroundGradientTo: "#2B32B2",
           backgroundGradientFromOpacity: 0.1,
@@ -80,17 +76,17 @@ const Chart = (props) => {
             stroke: "white",
           },
         }}
-        style={{
-
-
-        }}
+        style={
+          {
+            //
+            //
+          }
+        }
       />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
 
 export default Chart;

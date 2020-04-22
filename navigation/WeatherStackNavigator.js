@@ -7,7 +7,8 @@ import ChartScreen from "../screens/ChartScreen";
 import routes from "./routes";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/CustomHeaderButton";
-
+import WeatherForecastChartScreen from "../screens/WeatherForecastChartScreen";
+import SettingsScreen from "../screens/SettingsScreen";
 const Stack = createStackNavigator();
 
 const WeatherStackNavigator = () => {
@@ -21,9 +22,9 @@ const WeatherStackNavigator = () => {
               <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                 <Item
                   title="Stash"
-                  iconName="md-options"
+                  iconName="md-settings"
                   onPress={() => {
-                    props.navigation.navigate(routes.Options);
+                    props.navigation.navigate(routes.Settings);
                   }}
                 />
               </HeaderButtons>
@@ -39,25 +40,29 @@ const WeatherStackNavigator = () => {
         };
       }}
     >
-      <Stack.Screen
-        name={routes.Start}
-        component={StartScreen}
-
-
-      />
+      <Stack.Screen name={routes.Start} component={StartScreen} />
       <Stack.Screen
         name={routes.Weather}
         component={WeatherForecastScreen}
-        options={
-          ({ route }) => ({
-            title: route.params.city,
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontFamily: 'comic-neue',
-            },
-          })}
+        options={({ route }) => ({
+          title: route.params.city,
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontFamily: "comic-neue",
+          },
+        })}
       />
-
+      <Stack.Screen
+        name={routes.Settings}
+        component={SettingsScreen}
+        options={({ route }) => ({
+          title: "Settings",
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontFamily: "comic-neue",
+          },
+        })}
+      />
     </Stack.Navigator>
   );
 };
