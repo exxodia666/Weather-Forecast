@@ -10,7 +10,7 @@ export function loadForecast(city) {
 
   const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${key}`;
 
-//api.openweathermap.org/data/2.5/forecast?q={city name}&appid={your api key}
+  //api.openweathermap.org/data/2.5/forecast?q={city name}&appid={your api key}
 
   return (dispatch) => {
     return Axios.get(url)
@@ -19,6 +19,7 @@ export function loadForecast(city) {
       })
       .catch((error) => {
         Alert.alert('Error' + error);
+        //todo dispatch error
       });
   };
 }

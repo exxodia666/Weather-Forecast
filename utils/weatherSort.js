@@ -3,27 +3,21 @@ var moment = require("moment");
 const weatherSort = (weather) => {
   //console.log(moment("2020-04-25 21:00:00"));
   const checkArray = [];
-  return weather
-    .map((item1) => {
-      //console.log(item1);
-      if (checkArray.indexOf(item1) === -1) {
-        checkArray.push(item1);
-        // console.log(typeof(item1.date));
-        return weather.filter((item) => {
-          //console.log(item);
-          if (
-            new Date(moment(item1.date)).getDay() ===
-              new Date(moment(item.date)).getDay() &&
-            new Date(moment(item1.date)).getMonth() ===
-              new Date(moment(item.date)).getMonth()
-          ) {
-            checkArray.push(item);
-            /// console.log("LOOOOOOOOOOOOOOOOOOOOOOOOOL");
-            return true;
-          }
-        });
-      }
-    })
+  return weather.map((item1) => {
+    //console.log(item1);
+    if (checkArray.indexOf(item1) === -1) {
+      checkArray.push(item1);
+      // console.log(typeof(item1.date));
+      return weather.filter((item) => {
+        //console.log(item);
+        if (new Date(moment(item1.date)).getDay() === new Date(moment(item.date)).getDay() && new Date(moment(item1.date)).getMonth() === new Date(moment(item.date)).getMonth()) {
+          checkArray.push(item);
+          /// console.log("LOOOOOOOOOOOOOOOOOOOOOOOOOL");
+          return true;
+        }
+      });
+    }
+  })
     .filter((item) => {
       return item != undefined;
     })
@@ -66,11 +60,12 @@ const weatherSort = (weather) => {
         let icon;
         let date;
         item[key].forEach((element) => {
-          temperature = temperature + element.temperature;
+          temperature = temperature + new Number(element.temperature);
           icon = element.icon;
           date = element.date;
         });
-        weather[key].temperature = (temperature / item[key].length).toFixed(2);
+        console.log(temperature);
+        weather[key].temperature = (temperature / item[key].length).toFixed(0);
         weather[key].icon = icon;
         weather[key].date = date;
       }

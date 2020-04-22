@@ -15,7 +15,7 @@ export default (state = initialState, action) => {
         ...state,
         city: action.data.name,
         icon: action.data.weather[0].icon,
-        temperature: action.data.main.temp,
+        temperature: (action.data.main.temp - 273.15).toFixed(0),
         fetchTime: action.time
       };
   }

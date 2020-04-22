@@ -26,7 +26,7 @@ const Weather = (props) => {
           }}
         />
         <Text style={{ ...styles.text, ...styles.temperature }}>
-          {(props.temperature - 273.15).toFixed(0) + "\u00b0"}
+          {(props.temperature) + "\u00b0"}
         </Text>
       </View>
     </View>

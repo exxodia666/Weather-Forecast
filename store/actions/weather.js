@@ -13,6 +13,7 @@ export function loadWeather(city) {
       })
       .catch((error) => {
         Alert.alert('Error' + error);
+        //todo dispatch error
       });
   };
 }

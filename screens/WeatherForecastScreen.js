@@ -48,7 +48,7 @@ const WeatherForecastScreen = (props) => {
     return (
 
       <ImageBackground source={image} style={styles.image}>
-        <View style={{ flex: 3 / 4, justifyContent: 'center' }}>
+        <View style={styles.temperature}>
           <Weather
             icon={weather.icon}
             city={weather.city}
@@ -57,43 +57,49 @@ const WeatherForecastScreen = (props) => {
             fetchTime={weather.fetchTime}
           />
         </View>
-
-        <View style={{ flex: 1 / 4, justifyContent: 'center', }}>
-          {//<Chart />
-          }
-          <WeekForecast />
-          {/*
-          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
-            <Text style={{ fontFamily: 'comic-neue' }}>
-              Updated: {weather.fetchTime}
-            </Text>
-            <TouchableOpacity
-              style={styles.refresh}
-              onPress={() => fetchWeather()}
-            >
-              <Ionicons name={"md-refresh"} size={23} />
-            </TouchableOpacity>
-          </View>
-
+        <WeekForecast />
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: "center"
+        }}
+        >
           <Text style={{ fontFamily: 'comic-neue' }}>
-            Powered by: Open Weather
-          </Text>*/}
+            Updated: {weather.fetchTime}
+          </Text>
+          <TouchableOpacity
+            style={styles.refresh}
+            onPress={() => fetchWeather()}
+          >
+            <Ionicons name={"md-refresh"} size={15} />
+          </TouchableOpacity>
         </View>
-      </ImageBackground>
+        <Text style={{ fontFamily: 'comic-neue' }}>
+          Powered by: Open Weather
+          </Text>
+
+      </ImageBackground >
     );
   }
 };
 
 const styles = StyleSheet.create({
+  temperature: {
+    height:'50%',
+    //backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   refresh: {
     padding: 10,
   },
   image: {
+    //backgroundColor:'yellow',
     paddingTop: 10,
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: 'center',
+    //backgroundColor: "#fff",
+    alignItems: 'center',
+    justifyContent: 'flex-end',
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   }

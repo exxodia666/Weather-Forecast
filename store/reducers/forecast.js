@@ -16,12 +16,11 @@ export default (state = initialState, action) => {
     //console.log(action.data);
     switch (action.type) {
         case LOAD_FORECAST:
-            console.log('Foreca');
-
+            //console.log('Foreca');
             const weatherArray = action.data.list.map((i) => {
                 return {
                     date: i.dt_txt,
-                    temperature: i.main.temp,
+                    temperature: (i.main.temp - 273.15).toFixed(0),
                     icon: i.weather[0].icon,
                     time: action.time
                 }
