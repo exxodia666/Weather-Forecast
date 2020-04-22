@@ -1,20 +1,24 @@
+var moment = require("moment");
+
 const weatherSort = (weather) => {
-  console.log(new Date('2020-04-25 21:00:00'));
+  //console.log(moment("2020-04-25 21:00:00"));
   const checkArray = [];
   return weather
     .map((item1) => {
       //console.log(item1);
       if (checkArray.indexOf(item1) === -1) {
         checkArray.push(item1);
-       // console.log(typeof(item1.date));
+        // console.log(typeof(item1.date));
         return weather.filter((item) => {
           //console.log(item);
           if (
-            new Date(item1.date).getDay() === new Date(item.date).getDay() &&
-            new Date(item1.date).getMonth() === new Date(item.date).getMonth()
+            new Date(moment(item1.date)).getDay() ===
+              new Date(moment(item.date)).getDay() &&
+            new Date(moment(item1.date)).getMonth() ===
+              new Date(moment(item.date)).getMonth()
           ) {
             checkArray.push(item);
-            console.log("LOOOOOOOOOOOOOOOOOOOOOOOOOL");
+            /// console.log("LOOOOOOOOOOOOOOOOOOOOOOOOOL");
             return true;
           }
         });
@@ -29,13 +33,13 @@ const weatherSort = (weather) => {
       const night = [];
       item.forEach((item) => {
         if (
-          new Date(item.date).getHours() <= 11 &&
-          new Date(item.date).getHours() > 5
+          new Date(moment(item.date)).getHours() <= 11 &&
+          new Date(moment(item.date)).getHours() > 5
         ) {
           morning.push(item);
         } else if (
-          new Date(item.date).getHours() >= 12 &&
-          new Date(item.date).getHours() < 20
+          new Date(moment(item.date)).getHours() >= 12 &&
+          new Date(moment(item.date)).getHours() < 20
         ) {
           day.push(item);
         } else {

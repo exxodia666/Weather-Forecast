@@ -24,8 +24,6 @@ const WeekForecast = (props) => {
 
   const week = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Satur"];
 
-  //console.log(weather);
-
   const url = (iconName) =>
     `http://openweathermap.org/img/wn/${iconName}@2x.png`;
 
@@ -48,9 +46,34 @@ const WeekForecast = (props) => {
     (item) => week[item]
   );
 
+  const func = (item) => {
+    for (let key in item) {
+      console.log(item[key]);
+      if (item[key].date === undefined) {
+        return (
+          <View>
+            <Text>undefined</Text>
+            <Text>undefined</Text>
+            <Text>undefined</Text>
+          </View>
+        );
+      } else {
+        return (
+          <View>
+            <Text>{item[key].date}</Text>
+            <Text>{item[key].icon}</Text>
+            <Text>{item[key].temperature}</Text>
+          </View>
+        );
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.column}></View>
+      {weather.forEach((item) => {
+        return <View style={styles.column}>{func(item)}</View>;
+      })}
     </View>
   );
 };
@@ -71,6 +94,9 @@ const styles = StyleSheet.create({
     flex: 1 / 5,
     borderWidth: 1,
     borderColor: "grey",
+  },
+  column: {
+    flexDirection: "column",
   },
 });
 
