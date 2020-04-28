@@ -10,7 +10,7 @@ import {
 
 import { useSelector } from "react-redux";
 import weatherSort from "../utils/weatherSort";
-import { url, createWeekDaysArray } from "../constants/constants";
+import {week, url, createWeekDaysArray } from "../constants/constants";
 
 const WeekForecast = (props) => {
   const weather = weatherSort(useSelector((state) => state.forecast.weather));

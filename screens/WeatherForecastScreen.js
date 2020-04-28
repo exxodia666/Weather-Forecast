@@ -13,7 +13,10 @@ import { loadForecast } from "../store/actions/forecast";
 const WeatherForecastScreen = (props) => {
   const cityName = props.route.params.city;
   const [isFetched, setIsFetched] = useState(false);
+  
   const weather = useSelector((state) => state.weather);
+  console.log(weather);
+
   const daytime = useSelector((state) => state.daytime.time);
   const dispatch = useDispatch();
   useEffect(() => {

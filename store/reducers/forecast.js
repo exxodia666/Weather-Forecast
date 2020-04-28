@@ -13,10 +13,8 @@ const obj = {
     time: 12
 };
 export default (state = initialState, action) => {
-    //console.log(action.data);
     switch (action.type) {
         case LOAD_FORECAST:
-            //console.log('Foreca');
             const weatherArray = action.data.list.map((i) => {
                 return {
                     date: i.dt_txt,
@@ -26,7 +24,6 @@ export default (state = initialState, action) => {
                 }
 
             });
-           // console.log(weatherArray);
             return {
                 ...state,
                 weather: weatherArray,

@@ -3,6 +3,7 @@ const routes = {
   Weather: "Weather",
   Chart: "Chart",
   Settings: "Settings",
-  // Start: 'Start',
+  AddNewCity: 'AddNewCity',
+  Cities: 'Cities',
 };
 export default routes;

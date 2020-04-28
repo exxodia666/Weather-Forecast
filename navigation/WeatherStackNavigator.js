@@ -1,14 +1,19 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-//Screens
-import StartScreen from "../screens/StartScreen";
-import WeatherForecastScreen from "../screens/WeatherForecastScreen";
-import ChartScreen from "../screens/ChartScreen";
+//
 import routes from "./routes";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/CustomHeaderButton";
-import WeatherForecastChartScreen from "../screens/WeatherForecastChartScreen";
+//Screens
+import StartScreen from "../screens/StartScreen";
+import WeatherForecastScreen from "../screens/WeatherForecastScreen";
+//import ChartScreen from "../screens/ChartScreen";
+//import WeatherForecastChartScreen from "../screens/WeatherForecastChartScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import CitiesScreen from "../screens/CitiesScreen";
+import AddNewCityScreen from "../screens/AddNewCityScreen";
+
+
 const Stack = createStackNavigator();
 
 const WeatherStackNavigator = () => {
@@ -23,14 +28,14 @@ const WeatherStackNavigator = () => {
                 <Item
                   title="Cities"
                   onPress={() => {
-                    props.navigation.navigate(routes.Settings);
+                    props.navigation.navigate(routes.Cities);
                   }}
                 />
                 <Item
                   title="Add"
                   iconName="md-add"
                   onPress={() => {
-                    props.navigation.navigate(routes.Settings);
+                    props.navigation.navigate(routes.AddNewCity);
                   }}
                 />
                 <Item
@@ -72,6 +77,29 @@ const WeatherStackNavigator = () => {
         component={SettingsScreen}
         options={({ route }) => ({
           title: "Settings",
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontFamily: "comic-neue",
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name={routes.AddNewCity}
+        component={AddNewCityScreen}
+        options={({ route }) => ({
+          title: "AddNewCity",
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontFamily: "comic-neue",
+          },
+        })}
+      />
+      <Stack.Screen
+        name={routes.Cities}
+        component={CitiesScreen}
+        options={({ route }) => ({
+          title: "Cities",
           headerTintColor: "#fff",
           headerTitleStyle: {
             fontFamily: "comic-neue",

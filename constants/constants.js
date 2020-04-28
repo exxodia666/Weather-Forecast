@@ -2,7 +2,7 @@ export const apiKey = '9c05cf1a5571e27f680bf836b7881520';
 export const url = (iconName) => `http://openweathermap.org/img/wn/${iconName}@2x.png`;
 
 
-const week = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Satur"];
+export const week = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Satur"];
 
 export const createWeekDaysArray = (day) => {
   const firstDay = day;
@@ -16,6 +16,5 @@ export const createWeekDaysArray = (day) => {
     data.push(day);
     day++;
   }
-  // console.log(data);
   return data;
 };
