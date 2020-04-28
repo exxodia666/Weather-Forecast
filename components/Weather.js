@@ -16,11 +16,11 @@ import { url } from "../constants/constants";
  * 
  */
 const Weather = (props) => {
-  const description = 'fog';
-  const tempUnits = 'K';
+  const description = 'light rain';
+  //const tempUnits = 'C';
   const humidity = 87; //%
-  const pressure = '1004';
-  const wind = 1004;//hPa 10^2Pa
+  const pressure = '1004';//hPa 10^2Pa
+  const wind = 4;
   const feels_like = 276.79;
   const clouds = 75;//%
 
@@ -28,57 +28,75 @@ const Weather = (props) => {
   return (
     <View style={styles.weather}>
 
-      <View style={styles.block}>
-        <View style={styles.row}>
-          <Image
-            style={styles.logo}
-            source={{
-              uri: url(props.icon),
-            }}
-          />
-          <View>
+      <View style={{ ...styles.row, ...styles.space_between }}>
+        <View style={styles.block}>
+          <View style={{ ...styles.row }}>
+            <Image
+              style={styles.logo}
+              source={{
+                uri: url(props.icon),
+              }}
+            />
+            <Text style={{ ...styles.text, ...styles.description }}>{newStr}</Text>
+          </View>
+          <View style={styles.temperature}>
             <Text style={{ ...styles.text, ...styles.temperature }}>
-              {(props.temperature) + "\u00b0 " + tempUnits}
+              {(props.temperature - 273.15).toFixed(0) + "\u00b0 "}
             </Text>
-            <Text style={{ ...styles.text, ...styles.temperature }}>{newStr}</Text>
+          </View>
+
+        </View>
+
+        <View style={styles.block}>
+          <View style={styles.info}>
+            <Text style={{ ...styles.text, ...styles.infoText }}>Clouds: {clouds}%</Text>
+            <Text style={{ ...styles.text, ...styles.infoText }}>Pressure: {pressure / 100} Pa</Text>
+            <Text style={{ ...styles.text, ...styles.infoText }}>Wind speed: {wind} m/s</Text>
+            <Text style={{ ...styles.text, ...styles.infoText }}>Humidity: {humidity}%</Text>
           </View>
         </View>
       </View>
-      <View style={styles.block}>
-        <View style={styles.info}>
-          <Text style={{ ...styles.text, ...styles.infoText }}>Clouds: {clouds}%</Text>
-          <Text style={{ ...styles.text, ...styles.infoText }}>Pressure: {pressure / 100} Pa</Text>
-          <Text style={{ ...styles.text, ...styles.infoText }}>Wind speed: {wind} m/s</Text>
-          <Text style={{ ...styles.text, ...styles.infoText }}>Humidity: {humidity}%</Text>
-        </View>
-      </View>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  space_between: {
+    alignItems: 'center',
+    justifyContent: "space-between",
+  },
+  description: {
+    borderBottomWidth: 2,
+    borderColor: 'rgba(0, 0, 0, 0.3)',
+    fontSize: 22,
+  },
   info: {
+    color: 'black',
     padding: 10,
-    justifyContent: "center",
-    alignItems: 'flex-start'
+    //justifyContent: "center",
+    //alignItems: 'flex-start'
   },
   block: {
-    width: '100%',
+    //width: '100%',
     //borderWidth: 1,
     //borderColor: 'rgba(10,10,10,0.2)',
   },
   weather: {
-    elevation: 4,
-    borderWidth: 1,
-    width: Dimensions.get("window").width,
-    // padding: 20,
-    alignItems: "center",
-    justifyContent: "center",
+    overflow: 'hidden',
+   // elevation: 10,
+   // borderWidth: 2,
+    //borderRightWidth: 1,
+    borderRadius: 5,
+    width: Dimensions.get("window").width * 0.85,
+    padding: 20,
+    //alignItems: "center",
+    //justifyContent: "center",
   },
   logo: {
-    width: 120,
-    height: 120,
-    margin: 0,
+    width: 60,
+    height: 60,
+    // margin: 0,
   },
   row: {
     flexDirection: "row",
@@ -86,15 +104,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   text: {
-    textShadowColor: "grey",
-    textShadowRadius: 5,
+    textShadowColor: "black",
+    //textShadowRadius: 1,
     fontFamily: "comic-neue",
   },
   refresh: {
     padding: 10
   },
   temperature: {
-    fontSize: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: 90,
   }
 });
 

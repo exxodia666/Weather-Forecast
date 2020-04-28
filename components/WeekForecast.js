@@ -5,12 +5,11 @@ import {
   View,
   Image,
   Dimensions,
-
 } from "react-native";
 
 import { useSelector } from "react-redux";
 import weatherSort from "../utils/weatherSort";
-import {week, url, createWeekDaysArray } from "../constants/constants";
+import { week, url, createWeekDaysArray } from "../constants/constants";
 
 const WeekForecast = (props) => {
   const weather = weatherSort(useSelector((state) => state.forecast.weather));
@@ -30,20 +29,19 @@ const WeekForecast = (props) => {
       }
       if (item[key].date === undefined) {
         counter++;
-        return <View style={styles.day}></View>;
       } else {
         counter++;
         return (
           <View style={styles.day}>
-            <Text>{daytime}</Text>
+            <Text style={styles.text}>{daytime}</Text>
             <Image
               style={styles.logo}
               source={{
                 uri: url(item[key].icon),
               }}
             />
-            <Text>
-              {item[key].temperature} {"\u00b0"}
+            <Text style={styles.text}>
+              {item[key].temperature}{"\u00b0"}
             </Text>
           </View>
         );
@@ -56,7 +54,7 @@ const WeekForecast = (props) => {
     return week.map((element) => {
       return (
         <View style={styles.week}>
-          <Text>{element}</Text>
+          <Text style={styles.text}>{element}</Text>
         </View>
       );
     });
@@ -76,11 +74,18 @@ const WeekForecast = (props) => {
 };
 
 const styles = StyleSheet.create({
+  text:{
+    fontFamily: "comic-neue",
+    fontSize: 12,
+  },
   week: {
     flex: 1 / 5,
     justifyContent: "center",
     alignItems: "center",
-
+    margin: 1,
+    borderBottomRightRadius: 10,
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
   },
   logo: {
     width: 20,
@@ -96,8 +101,11 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width,
   },
   day: {
-    borderColor: 'black',
-    borderWidth: 2,
+    //borderColor: 'black',
+    margin: 1,
+    borderBottomRightRadius: 5,
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",

@@ -32,7 +32,7 @@ const SettingsScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.settings}>
-        <Text style={{ ...styles.text, ...styles.head }}>Settings</Text>
+        <Text style={{ ...styles.text, ...styles.head }}>Settings Coming Soon...</Text>
         <View style={styles.row}>
           <Switch
             trackColor={{ false: "#767577", true: "#81b0ff" }}

@@ -6,9 +6,9 @@ const AddNewCityScreen = () => {
   return (
     <View style={styles.container}>
       <Text>
-          Add new city
+        Coming Soon...
       </Text>
-      <TextInput 
+      <TextInput
         placeholder='Enter city'
       />
     </View>
@@ -16,16 +16,16 @@ const AddNewCityScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    row: {
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      flexDirection: 'row',
-    },
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-  });
+  row: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
 
 export default AddNewCityScreen;

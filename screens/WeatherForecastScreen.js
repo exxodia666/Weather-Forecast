@@ -13,7 +13,7 @@ import { loadForecast } from "../store/actions/forecast";
 const WeatherForecastScreen = (props) => {
   const cityName = props.route.params.city;
   const [isFetched, setIsFetched] = useState(false);
-  
+
   const weather = useSelector((state) => state.weather);
   console.log(weather);
 
@@ -37,7 +37,9 @@ const WeatherForecastScreen = (props) => {
   }, [dispatch]);
 
   if (isFetched === false) {
-    return <ActivityIndicator />;
+    return <View style={{flex: 1, justifyContent: "center", alignItems: 'center' }}>
+              <ActivityIndicator />
+            </View>;
   } else {
     return (
       <ImageBackground source={image} style={styles.image}>
@@ -77,8 +79,11 @@ const WeatherForecastScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
+  text:{
+    fontFamily: 'comic-neue'
+  },
   temperature: {
-    height:'50%',
+    height: '50%',
     justifyContent: 'center',
     alignItems: 'center',
   },

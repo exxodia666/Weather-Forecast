@@ -10,7 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { setDayTime } from "../store/actions/daytime";
 
 const StartScreen = (props) => {
-  const [cityName, setCity] = useState("London");
+  const [cityName, setCity] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import { View, Text, Dimensions, StyleSheet } from "react-native";
 const CitiesScreen = () => {
     return (
         <View style={styles.container}>
-            <Text>Cities</Text>
+            <Text>Coming Soon...</Text>
         </View>
     );
 };

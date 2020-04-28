@@ -32,13 +32,6 @@ const WeatherStackNavigator = () => {
                   }}
                 />
                 <Item
-                  title="Add"
-                  iconName="md-add"
-                  onPress={() => {
-                    props.navigation.navigate(routes.AddNewCity);
-                  }}
-                />
-                <Item
                   title="Settings"
                   iconName="md-settings"
                   onPress={() => {
@@ -98,13 +91,38 @@ const WeatherStackNavigator = () => {
       <Stack.Screen
         name={routes.Cities}
         component={CitiesScreen}
-        options={({ route }) => ({
-          title: "Cities",
-          headerTintColor: "#fff",
-          headerTitleStyle: {
-            fontFamily: "comic-neue",
-          },
-        })}
+        options={(props) => {
+          return {
+            headerRight: () => {
+              return (
+                <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+              
+                  <Item
+                    title="Add"
+                    iconName="md-add"
+                    onPress={() => {
+                      props.navigation.navigate(routes.AddNewCity);
+                    }}
+                  />
+                  <Item
+                    title="Settings"
+                    iconName="md-settings"
+                    onPress={() => {
+                      props.navigation.navigate(routes.Settings);
+                    }}
+                  />
+                </HeaderButtons>
+              );
+            },
+            headerStyle: {
+              backgroundColor: "#0043A4",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          };
+        }}
       />
     </Stack.Navigator>
   );
