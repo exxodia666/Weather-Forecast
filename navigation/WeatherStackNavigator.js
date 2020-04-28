@@ -21,7 +21,20 @@ const WeatherStackNavigator = () => {
             return (
               <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                 <Item
-                  title="Stash"
+                  title="Cities"
+                  onPress={() => {
+                    props.navigation.navigate(routes.Settings);
+                  }}
+                />
+                <Item
+                  title="Add"
+                  iconName="md-add"
+                  onPress={() => {
+                    props.navigation.navigate(routes.Settings);
+                  }}
+                />
+                <Item
+                  title="Settings"
                   iconName="md-settings"
                   onPress={() => {
                     props.navigation.navigate(routes.Settings);
@@ -41,6 +54,7 @@ const WeatherStackNavigator = () => {
       }}
     >
       <Stack.Screen name={routes.Start} component={StartScreen} />
+
       <Stack.Screen
         name={routes.Weather}
         component={WeatherForecastScreen}
@@ -52,6 +66,7 @@ const WeatherStackNavigator = () => {
           },
         })}
       />
+
       <Stack.Screen
         name={routes.Settings}
         component={SettingsScreen}

@@ -4,10 +4,9 @@ import {
   Dimensions,
   StyleSheet,
   ImageBackground,
-} from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+} from "react-native";import { LinearGradient } from "expo-linear-gradient";
 import Weather from "../components/Weather";
-import Chart from "../components/Chart";
+import Chart from "../components/_Chart";
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator } from "react-native";
 import { useSelector, useDispatch } from "react-redux";

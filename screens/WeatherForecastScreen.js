@@ -1,7 +1,5 @@
 import { View, Text, Dimensions, StyleSheet, ImageBackground } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import Weather from "../components/Weather";
-import Chart from "../components/Chart";
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,20 +12,13 @@ import { loadForecast } from "../store/actions/forecast";
 
 const WeatherForecastScreen = (props) => {
   const cityName = props.route.params.city;
-
   const [isFetched, setIsFetched] = useState(false);
-
   const weather = useSelector((state) => state.weather);
   const daytime = useSelector((state) => state.daytime.time);
-  //console.log(weather);
-
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(setDayTime());
   }, []);
-
-  //console.log(daytime);
   const image = (daytime) ? require('../assets/day.png') : require('../assets/night.png');
 
 
@@ -46,7 +37,6 @@ const WeatherForecastScreen = (props) => {
     return <ActivityIndicator />;
   } else {
     return (
-
       <ImageBackground source={image} style={styles.image}>
         <View style={styles.temperature}>
           <Weather
@@ -86,7 +76,6 @@ const WeatherForecastScreen = (props) => {
 const styles = StyleSheet.create({
   temperature: {
     height:'50%',
-    //backgroundColor: 'red',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -94,10 +83,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   image: {
-    //backgroundColor:'yellow',
     paddingTop: 10,
     flex: 1,
-    //backgroundColor: "#fff",
     alignItems: 'center',
     justifyContent: 'flex-end',
     width: Dimensions.get('window').width,

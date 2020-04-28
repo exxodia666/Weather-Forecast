@@ -3,19 +3,12 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
   Image,
   Dimensions,
-  TouchableOpacity,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
-
-const url = (iconName) => `http://openweathermap.org/img/wn/${iconName}@2x.png`;
+import { url } from "../constants/constants";
 
 const Weather = (props) => {
-  //console.log("props");
- // console.log(props);
   return (
     <View style={styles.weather}>
       <View style={styles.row}>

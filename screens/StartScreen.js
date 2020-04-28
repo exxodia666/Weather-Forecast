@@ -1,36 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, use, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   StyleSheet,
-  Button,
   View,
-  ActivityIndicator,
-  Text,
   Dimensions,
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import routes from "../navigation/routes";
 import { Ionicons } from "@expo/vector-icons";
 import { setDayTime } from "../store/actions/daytime";
-//import FetchWeather from "../containers/FetchingData";
-
-/*
-  basic template
-  
-*/
 
 const StartScreen = (props) => {
   const [cityName, setCity] = useState("London");
-  
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setDayTime());
   }, []);
-  /*
-  const daytime = useSelector(state => state.daytime);
-  console.log(daytime);
-  */
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
@@ -40,7 +25,6 @@ const StartScreen = (props) => {
           value={cityName}
           onChangeText={(text) => setCity(text)}
         />
-
         <TouchableOpacity
           style={styles.refresh}
           onPress={() =>
