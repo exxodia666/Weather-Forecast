@@ -64,7 +64,7 @@ const weatherSort = (weather) => {
           icon = element.icon;
           date = element.date;
         });
-        console.log(temperature);
+        //console.log(temperature);
         weather[key].temperature = (temperature / item[key].length).toFixed(0);
         weather[key].icon = icon;
         weather[key].date = date;

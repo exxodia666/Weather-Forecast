@@ -1,6 +1,13 @@
 export const apiKey = '9c05cf1a5571e27f680bf836b7881520';
 export const url = (iconName) => `http://openweathermap.org/img/wn/${iconName}@2x.png`;
+const key = "44c682133431d2307217999c8c120d54";
+ 
+ 
+export const cityReqUrl = (city) => `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
+export const geoReqUrl = (lat,lon) => `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}`;
 
+export const cityForecastReqUrl = (city) => `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${key}`;
+export const geoForecastReqUrl = (lat,lon) => `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}`;
 
 export const week = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Satur"];
 

@@ -7,7 +7,7 @@ import { useFonts } from '@use-expo/font';
 
 export default function App() {
   let [fontsLoaded] = useFonts({
-    'comic-neue': require('./assets/fonts/ComicNeue-Bold.ttf'),
+    'comic-neue': require('./assets/fonts/Comic_Neue/ComicNeue-Bold.ttf'),
   });
 
   if (!fontsLoaded) {

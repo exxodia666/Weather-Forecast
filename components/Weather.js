@@ -7,14 +7,6 @@ import {
   Dimensions,
 } from "react-native";
 import { url } from "../constants/constants";
-//props{
-//tempUnits - F, C, K
-//
-//}
-/**
- * 
- * 
- */
 const Weather = (props) => {
   const description = 'light rain';
   //const tempUnits = 'C';
@@ -41,7 +33,7 @@ const Weather = (props) => {
           </View>
           <View style={styles.temperature}>
             <Text style={{ ...styles.text, ...styles.temperature }}>
-              {(props.temperature - 273.15).toFixed(0) + "\u00b0 "}
+              {(props.temperature).toFixed(0) + "\u00b0 "}
             </Text>
           </View>
 

@@ -12,6 +12,7 @@ import WeatherForecastScreen from "../screens/WeatherForecastScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import CitiesScreen from "../screens/CitiesScreen";
 import AddNewCityScreen from "../screens/AddNewCityScreen";
+import LocationScreen from "../screens/LocationScreen";
 
 
 const Stack = createStackNavigator();
@@ -51,7 +52,7 @@ const WeatherStackNavigator = () => {
         };
       }}
     >
-      <Stack.Screen name={routes.Start} component={StartScreen} />
+      <Stack.Screen name={routes.Start} component={LocationScreen} />
 
       <Stack.Screen
         name={routes.Weather}

@@ -5,16 +5,10 @@ const initialState = {
     weather: []
 };
 
-const obj = {
-    date: new Date(),
-    weekDay: 'a',
-    temperature: 12,
-    icon: '12b',
-    time: 12
-};
 export default (state = initialState, action) => {
     switch (action.type) {
         case LOAD_FORECAST:
+            console.log(action.data);
             const weatherArray = action.data.list.map((i) => {
                 return {
                     date: i.dt_txt,

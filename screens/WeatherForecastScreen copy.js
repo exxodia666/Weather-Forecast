@@ -12,46 +12,12 @@ import { loadForecast } from "../store/actions/forecast";
 import units from "../constants/units";
 
 const WeatherForecastScreen = (props) => {
-
-
-
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-  const dispatch = useDispatch();
-  
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-      }
-      const location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    })();
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (location) {
-      dispatch(geoLoadForecast(location.coords.latitude, location.coords.longitude));
-      dispatch(geoLoadWeather(location.coords.latitude, location.coords.longitude));
-    }
-  });
-
-  let text = 'Waiting..';
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location.coords.longitude + ' ' + location.coords.latitude);
-  }
-
- // 
+  const cityName = props.route.params.city;
   const [isFetched, setIsFetched] = useState(false);
   const settings = useSelector((state) => state.settings);
   const weather = useSelector((state) => state.weather);
   const daytime = useSelector((state) => state.daytime.time);
   const dispatch = useDispatch();
-  props.navigation.setParams({cityName: weather.city})
-
 
   useEffect(() => {
     dispatch(setDayTime());
