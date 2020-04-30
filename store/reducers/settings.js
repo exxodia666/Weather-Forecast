@@ -3,7 +3,7 @@ import { SAVE_SETTINGS, RESTORE_DEFAULT } from "../actions/settings";
 import units from "../../constants/units";
 
 const initialState = {
-    geolocation: false,
+    geolocation: true,
     unit: units.Celsius,
     temperatureUnits: {
         [units.Celsius]: true,
@@ -12,7 +12,7 @@ const initialState = {
     }
 };
 const defaultSettings = {
-    geolocation: false,
+    geolocation: true,
     unit: units.Celsius,
     temperatureUnits: {
         [units.Celsius]: true,

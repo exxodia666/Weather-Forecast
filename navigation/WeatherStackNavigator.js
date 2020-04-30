@@ -52,13 +52,25 @@ const WeatherStackNavigator = () => {
         };
       }}
     >
-      <Stack.Screen name={routes.Start} component={LocationScreen} />
+      <Stack.Screen name={routes.Start} component={LocationScreen} 
+        options={({ route }) => ({
+          headerLeft: () => <></>,
+          headerRight: () => <></>,
+          title: 'Weather App',
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontFamily: "comic-neue",
+          },
+        })}
+      
+       />
 
       <Stack.Screen
         name={routes.Weather}
         component={WeatherForecastScreen}
         options={({ route }) => ({
-          title: route.params.city,
+          headerLeft: () => <></>,
+         // title: route.params.city,
           headerTintColor: "#fff",
           headerTitleStyle: {
             fontFamily: "comic-neue",

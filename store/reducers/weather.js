@@ -5,7 +5,7 @@ const initialState = {};
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_WEATHER:
-      console.log(action.data);
+     
       return {
         ...state,
         city: action.data.name,

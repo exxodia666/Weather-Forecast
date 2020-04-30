@@ -5,8 +5,6 @@ const moment = require('moment');
 
 export const LOAD_FORECAST = "LOAD_FORECAST";
 
-const key = "44c682133431d2307217999c8c120d54";
-
 export function geoLoadForecast(lat, lon) {
   return (dispatch) => {
     return Axios.get(geoForecastReqUrl(lat, lon))

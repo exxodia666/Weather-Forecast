@@ -1,5 +1,4 @@
 import { LOAD_FORECAST } from "../actions/forecast";
-import weather from "./weather";
 
 const initialState = {
     weather: []
@@ -8,7 +7,6 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case LOAD_FORECAST:
-            console.log(action.data);
             const weatherArray = action.data.list.map((i) => {
                 return {
                     date: i.dt_txt,
