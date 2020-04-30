@@ -13,14 +13,14 @@ import SettingsScreen from "../screens/SettingsScreen";
 import CitiesScreen from "../screens/CitiesScreen";
 import AddNewCityScreen from "../screens/AddNewCityScreen";
 import LocationScreen from "../screens/LocationScreen";
-
+import InfoScreen from "../screens/InfoScreen";
 
 const Stack = createStackNavigator();
 
 const WeatherStackNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName={routes.Start}
+      initialRouteName={routes.Location}
       screenOptions={(props) => {
         return {
           headerRight: () => {
@@ -30,6 +30,13 @@ const WeatherStackNavigator = () => {
                   title="Cities"
                   onPress={() => {
                     props.navigation.navigate(routes.Cities);
+                  }}
+                />
+                <Item
+                  title="Info"
+                  iconName="md-information-circle"
+                  onPress={() => {
+                    props.navigation.navigate(routes.Info);
                   }}
                 />
                 <Item
@@ -52,25 +59,27 @@ const WeatherStackNavigator = () => {
         };
       }}
     >
-      <Stack.Screen name={routes.Start} component={LocationScreen} 
+      <Stack.Screen
+        name={routes.Location}
+        component={LocationScreen}
         options={({ route }) => ({
           headerLeft: () => <></>,
           headerRight: () => <></>,
-          title: 'Weather App',
+          title: "Weather App",
           headerTintColor: "#fff",
           headerTitleStyle: {
             fontFamily: "comic-neue",
           },
         })}
-      
-       />
+      />
 
       <Stack.Screen
         name={routes.Weather}
         component={WeatherForecastScreen}
         options={({ route }) => ({
           headerLeft: () => <></>,
-         // title: route.params.city,
+          headerLeft: () => <></>,
+          title: route.params.city,
           headerTintColor: "#fff",
           headerTitleStyle: {
             fontFamily: "comic-neue",
@@ -94,13 +103,26 @@ const WeatherStackNavigator = () => {
         name={routes.AddNewCity}
         component={AddNewCityScreen}
         options={({ route }) => ({
-          title: "AddNewCity",
+          title: "Add NewCity",
           headerTintColor: "#fff",
           headerTitleStyle: {
             fontFamily: "comic-neue",
           },
         })}
       />
+
+      <Stack.Screen
+        name={routes.Info}
+        component={InfoScreen}
+        options={({ route }) => ({
+          title: "Info",
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontFamily: "comic-neue",
+          },
+        })}
+      />
+
       <Stack.Screen
         name={routes.Cities}
         component={CitiesScreen}
@@ -109,7 +131,6 @@ const WeatherStackNavigator = () => {
             headerRight: () => {
               return (
                 <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-              
                   <Item
                     title="Add"
                     iconName="md-add"

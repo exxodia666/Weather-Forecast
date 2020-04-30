@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { deleteCity } from "../store/actions/city";
 import { loadWeatherCity } from "../store/actions/weatherCity";
 import { ActivityIndicator } from "react-native";
-import City from "../components/City";
+import Weather from "../components/Weather";
 //import { deleteCity } from "../store/actions/city";
+import { countTemp } from "../constants/constants";
+import ImageBackgroundComponent from "../components/ImageBackgroundComponent";
 
 const CitiesScreen = () => {
   const dispatch = useDispatch();
@@ -15,7 +17,7 @@ const CitiesScreen = () => {
   const weatherCity = useSelector((state) => state.weatherCity);
   const [isFetched, setIsFetched] = useState(false);
   const deleteCityHander = (city) => dispatch(deleteCity(city));
-
+  const settings = useSelector((state) => state.settings);
   useEffect(() => {
     cities.forEach((item) => {
       dispatch(loadWeatherCity(item.city));
@@ -27,13 +29,13 @@ const CitiesScreen = () => {
 
   if (isFetched === false) {
     return (
-      <View style={styles.container}>
+      <ImageBackgroundComponent>
         <ActivityIndicator />
-      </View>
+      </ImageBackgroundComponent>
     );
   }
   return (
-    <View style={styles.container}>
+    <ImageBackgroundComponent>
       <ScrollView>
         {cities.map((city) => {
           const weather = weatherCity.find(
@@ -45,20 +47,35 @@ const CitiesScreen = () => {
           console.log(weather);
 
           return (
-            <City
-              deleteCity={ () => deleteCityHander(city)}
-              city={city.city}
+            <Weather
+              city = {city}
+              style={styles.weather}
               icon={weather.icon}
-              temperature={weather.feels_like}
+              city={weather.city}
+              temperature={countTemp(
+                settings.temperatureUnits,
+                weather.temperature
+              )}
+              clouds={weather.clouds}
+              pressure={weather.pressure}
+              wind={weather.wind}
+              humidity={weather.humidity}
+              description={weather.description}
+              fetchWeather={() => fetchWeatherCity(city)}
+              fetchTime={weather.fetchTime}
             />
           );
         })}
       </ScrollView>
-    </View>
+    </ImageBackgroundComponent>
   );
 };
 
 const styles = StyleSheet.create({
+  weather: { 
+    borderBottomWidth: 1,
+    width: Dimensions.get("window").width,
+  },
   row: {
     justifyContent: "center",
     alignItems: "center",

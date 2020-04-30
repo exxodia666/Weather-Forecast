@@ -9,6 +9,7 @@ export function geoLoadForecast(lat, lon) {
   return (dispatch) => {
     return Axios.get(geoForecastReqUrl(lat, lon))
       .then((response) => {
+        console.log(response);
         dispatch({ type: LOAD_FORECAST, data: response.data, time: moment().format('MMMM Do YYYY, h:mm:ss a') });
       })
       .catch((error) => {

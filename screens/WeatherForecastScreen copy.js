@@ -16,15 +16,13 @@ const WeatherForecastScreen = (props) => {
   const [isFetched, setIsFetched] = useState(false);
   const settings = useSelector((state) => state.settings);
   const weather = useSelector((state) => state.weather);
-  const daytime = useSelector((state) => state.daytime.time);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setDayTime());
   }, []);
-
-  const image = (daytime) ? require('../assets/day.png') : require('../assets/night.png');
-
+  
   const countTemp = (settings, temperature) => {
     const temp = (settings[units.Celsius]) ? (temperature - 273.15) : (settings[units.Farenheit]) ? ((temperature - 273.15) * 1.8 + 32): temperature;
     return temp;

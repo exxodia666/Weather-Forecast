@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import { setDayTime } from "../store/actions/daytime";
+import ImageBackgroundComponent from "../components/ImageBackgroundComponent";
 
 const StartScreen = (props) => {
   const [cityName, setCity] = useState("");
@@ -17,7 +14,7 @@ const StartScreen = (props) => {
     dispatch(setDayTime());
   }, []);
   return (
-    <View style={styles.container}>
+    <ImageBackgroundComponent style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.textInput}
@@ -34,12 +31,16 @@ const StartScreen = (props) => {
           <Ionicons name={"md-search"} size={23} />
         </TouchableOpacity>
       </View>
-    </View>
+    </ImageBackgroundComponent>
   );
 };
 export default StartScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    paddingTop: 20,
+    justifyContent: 'flex-start'
+  },
   inputContainer: {
     backgroundColor: "white",
     padding: 20,
@@ -58,11 +59,5 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     width: "90%",
     margin: 20,
-  },
-  container: {
-    paddingTop: 30,
-    flex: 1,
-    alignItems: "center",
-    // justifyContent: "center",
   },
 });

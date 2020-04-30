@@ -3,7 +3,6 @@ import {
   Text,
   Dimensions,
   StyleSheet,
-  ImageBackground,
 } from "react-native";
 import Weather from "../components/Weather";
 import React, { useState, useEffect } from "react";
@@ -16,8 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import WeekForecast from "../components/WeekForecast";
 import { loadForecast, geoLoadForecast } from "../store/actions/forecast";
 import units from "../constants/units";
-import * as Location from "expo-location";
-import { Button } from "react-native-elements";
+import ImageBackgroundComponent from "../components/ImageBackgroundComponent";
 
 const WeatherForecastScreen = (props) => {
   const [isFetched, setIsFetched] = useState(false);
@@ -27,7 +25,7 @@ const WeatherForecastScreen = (props) => {
 
   const lat = props.route.params.lat;
   const lon = props.route.params.lon;
-
+console.log(props.route.params);
   const city = weather.city;
   useEffect(() => {
     props.navigation.setOptions({ title: weather.city });
@@ -54,7 +52,7 @@ const WeatherForecastScreen = (props) => {
   const fetchWeather = (lat, lon) => {
     dispatch(geoLoadForecast(lat, lon));
     dispatch(geoLoadWeather(lat, lon));
-    if (weather) {
+    if (weather == {}) {
       setIsFetched(true);
     }
   };
@@ -80,7 +78,7 @@ const WeatherForecastScreen = (props) => {
     );
   } else {
     return (
-      <ImageBackground source={image} style={styles.image}>
+      <ImageBackgroundComponent>
         <View style={styles.temperature}>
           <Weather
             icon={weather.icon}
@@ -89,6 +87,11 @@ const WeatherForecastScreen = (props) => {
               settings.temperatureUnits,
               weather.temperature
             )}
+            clouds= {weather.clouds}
+            pressure={weather.pressure}
+            wind={weather.wind}
+            humidity={weather.humidity}
+            description={weather.description}
             fetchWeather={() => fetchWeatherCity(city)}
             fetchTime={weather.fetchTime}
           />
@@ -114,7 +117,7 @@ const WeatherForecastScreen = (props) => {
         <Text style={{ fontFamily: "comic-neue" }}>
           Powered by: Open Weather
         </Text>
-      </ImageBackground>
+      </ImageBackgroundComponent>
     );
   }
 };

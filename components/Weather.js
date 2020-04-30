@@ -1,27 +1,16 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
 import { url } from "../constants/constants";
 const Weather = (props) => {
-  const description = 'light rain';
-  //const tempUnits = 'C';
-  const humidity = 87; //%
-  const pressure = '1004';//hPa 10^2Pa
-  const wind = 4;
-  const feels_like = 276.79;
-  const clouds = 75;//%
-
-  let newStr = description[0].toUpperCase() + description.slice(1);
+  //console.log(props);
+  let newStr = props.description[0].toUpperCase() + props.description.slice(1);
   return (
-    <View style={styles.weather}>
-
+    <View style={{ ...styles.weather, ...props.style }}>
       <View style={{ ...styles.row, ...styles.space_between }}>
         <View style={styles.block}>
+          <Text style={{...styles.text, ...styles.city}}>
+            {props.city}
+          </Text>
           <View style={{ ...styles.row }}>
             <Image
               style={styles.logo}
@@ -29,42 +18,53 @@ const Weather = (props) => {
                 uri: url(props.icon),
               }}
             />
-            <Text style={{ ...styles.text, ...styles.description }}>{newStr}</Text>
+            <Text style={{ ...styles.text, ...styles.description }}>
+              {newStr}
+            </Text>
           </View>
           <View style={styles.temperature}>
             <Text style={{ ...styles.text, ...styles.temperature }}>
-              {(props.temperature).toFixed(0) + "\u00b0 "}
+              {props.temperature.toFixed(0) + "\u00b0 "}
             </Text>
           </View>
-
         </View>
 
         <View style={styles.block}>
           <View style={styles.info}>
-            <Text style={{ ...styles.text, ...styles.infoText }}>Clouds: {clouds}%</Text>
-            <Text style={{ ...styles.text, ...styles.infoText }}>Pressure: {pressure / 100} Pa</Text>
-            <Text style={{ ...styles.text, ...styles.infoText }}>Wind speed: {wind} m/s</Text>
-            <Text style={{ ...styles.text, ...styles.infoText }}>Humidity: {humidity}%</Text>
+            <Text style={{ ...styles.text, ...styles.infoText }}>
+              Clouds: {props.clouds}%
+            </Text>
+            <Text style={{ ...styles.text, ...styles.infoText }}>
+              Pressure: {props.pressure / 100} Pa
+            </Text>
+            <Text style={{ ...styles.text, ...styles.infoText }}>
+              Wind speed: {props.wind} m/s
+            </Text>
+            <Text style={{ ...styles.text, ...styles.infoText }}>
+              Humidity: {props.humidity}%
+            </Text>
           </View>
         </View>
       </View>
-
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  city: {
+    fontSize: 30,
+  },
   space_between: {
-    alignItems: 'center',
+    alignItems: "center",
     justifyContent: "space-between",
   },
   description: {
     borderBottomWidth: 2,
-    borderColor: 'rgba(0, 0, 0, 0.3)',
+    borderColor: "rgba(0, 0, 0, 0.3)",
     fontSize: 22,
   },
   info: {
-    color: 'black',
+    color: "black",
     padding: 10,
     //justifyContent: "center",
     //alignItems: 'flex-start'
@@ -75,9 +75,9 @@ const styles = StyleSheet.create({
     //borderColor: 'rgba(10,10,10,0.2)',
   },
   weather: {
-    overflow: 'hidden',
-   // elevation: 10,
-   // borderWidth: 2,
+    overflow: "hidden",
+    // elevation: 10,
+    // borderWidth: 2,
     //borderRightWidth: 1,
     borderRadius: 5,
     width: Dimensions.get("window").width * 0.85,
@@ -101,13 +101,13 @@ const styles = StyleSheet.create({
     fontFamily: "comic-neue",
   },
   refresh: {
-    padding: 10
+    padding: 10,
   },
   temperature: {
     justifyContent: "center",
     alignItems: "center",
     fontSize: 90,
-  }
+  },
 });
 
 export default Weather;

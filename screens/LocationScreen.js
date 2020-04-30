@@ -23,6 +23,7 @@ export default function LocationScreen(props) {
           setErrorMsg("Permission to access location was denied");
         }
         const location = await Location.getCurrentPositionAsync({});
+        console.log(location);
         setLocation(location);
       })();
     }
