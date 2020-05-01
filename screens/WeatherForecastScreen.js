@@ -42,12 +42,17 @@ const WeatherForecastScreen = (props) => {
 
   useEffect(() => {
     if (props.route.params.fetchType === "city") {
-      console.log("lolllllllllllllllllllllllllllllll");
       fetchWeatherCity(props.route.params.city);
+    } 
+  }, [props.route.params.city]);
+
+  useEffect(() => {
+    if (props.route.params.fetchType === "city") {
+     
     } else {
       fetchWeather(lat, lon);
     }
-  }, [city]);
+  }, [dispatch]);
 
   if (weather.error === true || weather.error === undefined) {
     return (
