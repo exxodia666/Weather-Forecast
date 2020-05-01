@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import { useDispatch, useSelector } from "react-redux";
+import ImageBackgroundComponent from "../components/ImageBackgroundComponent";
 
 export default function LocationScreen(props) {
   const [location, setLocation] = useState(null);
@@ -23,19 +24,20 @@ export default function LocationScreen(props) {
           setErrorMsg("Permission to access location was denied");
         }
         const location = await Location.getCurrentPositionAsync({});
-        console.log(location);
         setLocation(location);
       })();
     }
-  }, [dispatch]);
+  }, []);
   if (location === null) {
+
     return (
-      <View style={styles.container}>
-        <ActivityIndicator />
-      </View>
+      <ImageBackgroundComponent style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <ActivityIndicator />
+    </ImageBackgroundComponent>
     );
   }
   if (location) {
+    console.log('da ti ahuel');
     props.navigation.navigate("Weather", {
       lat: location.coords.latitude,
       lon: location.coords.longitude,

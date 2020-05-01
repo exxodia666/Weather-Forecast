@@ -1,18 +1,19 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
 
 import { useSelector } from "react-redux";
 import weatherSort from "../utils/weatherSort";
-import { week, url, createWeekDaysArray } from "../constants/constants";
+import {
+  week,
+  url,
+  createWeekDaysArray,
+  countTemp,
+} from "../constants/constants";
 
 const WeekForecast = (props) => {
   const weather = weatherSort(useSelector((state) => state.forecast.weather));
+  const settings = useSelector((state) => state.settings);
+  //console.log(settings.temperatureUnits);
 
   const labels = createWeekDaysArray(new Date().getDay()).map(
     (item) => week[item]
@@ -41,7 +42,8 @@ const WeekForecast = (props) => {
               }}
             />
             <Text style={styles.text}>
-              {item[key].temperature}{"\u00b0"}
+              {countTemp(settings.temperatureUnits, item[key].temperature)}{" "}
+              {"\u00b0"}
             </Text>
           </View>
         );
@@ -74,7 +76,7 @@ const WeekForecast = (props) => {
 };
 
 const styles = StyleSheet.create({
-  text:{
+  text: {
     fontFamily: "comic-neue",
     fontSize: 12,
   },
@@ -110,7 +112,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
     padding: 1,
-
   },
   column: {
     flex: 1 / 6,

@@ -1,48 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { StyleSheet, View, Dimensions } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
-import { setDayTime } from "../store/actions/daytime";
+
 import ImageBackgroundComponent from "../components/ImageBackgroundComponent";
+import routes from "../navigation/routes";
+import InputComponent from "../components/InputComponent";
 
 const StartScreen = (props) => {
-  const [cityName, setCity] = useState("");
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(setDayTime());
-  }, []);
+  const handler = (cityName) => {
+    props.navigation.navigate(routes.Weather, {
+      city: cityName,
+      fetchType: "city",
+    });
+  };
   return (
     <ImageBackgroundComponent style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Enter City"
-          value={cityName}
-          onChangeText={(text) => setCity(text)}
-        />
-        <TouchableOpacity
-          style={styles.refresh}
-          onPress={() =>
-            props.navigation.navigate("Weather", { city: cityName })
-          }
-        >
-          <Ionicons name={"md-search"} size={23} />
-        </TouchableOpacity>
-      </View>
+      <InputComponent icon="md-add" handler={handler} />
     </ImageBackgroundComponent>
   );
 };
 export default StartScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 20,
-    justifyContent: 'flex-start'
-  },
   inputContainer: {
     backgroundColor: "white",
+    marginTop: 40,
     padding: 20,
     alignItems: "center",
     justifyContent: "center",

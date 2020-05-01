@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { ScrollView } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { deleteCity } from "../store/actions/city";
 import { loadWeatherCity } from "../store/actions/weatherCity";
 import { ActivityIndicator } from "react-native";
-import Weather from "../components/Weather";
+import Weather from "../components/Weather/Weather";
 //import { deleteCity } from "../store/actions/city";
 import { countTemp } from "../constants/constants";
 import ImageBackgroundComponent from "../components/ImageBackgroundComponent";
@@ -18,10 +23,12 @@ const CitiesScreen = () => {
   const [isFetched, setIsFetched] = useState(false);
   const deleteCityHander = (city) => dispatch(deleteCity(city));
   const settings = useSelector((state) => state.settings);
+  console.log(weatherCity);
+
   useEffect(() => {
     cities.forEach((item) => {
       dispatch(loadWeatherCity(item.city));
-      if (weatherCity) {
+      if (!weatherCity.error) {
         setIsFetched(true);
       }
     });
@@ -29,14 +36,14 @@ const CitiesScreen = () => {
 
   if (isFetched === false) {
     return (
-      <ImageBackgroundComponent>
+      <ImageBackgroundComponent style={styles.container}>
         <ActivityIndicator />
       </ImageBackgroundComponent>
     );
   }
   return (
     <ImageBackgroundComponent>
-      <ScrollView>
+      <ScrollView style={styles.container}>
         {cities.map((city) => {
           const weather = weatherCity.find(
             (weather) => weather.city === city.city
@@ -48,7 +55,7 @@ const CitiesScreen = () => {
 
           return (
             <Weather
-              city = {city}
+              city={city}
               style={styles.weather}
               icon={weather.icon}
               city={weather.city}
@@ -72,20 +79,13 @@ const CitiesScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  weather: { 
+  weather: {
     borderBottomWidth: 1,
     width: Dimensions.get("window").width,
-  },
-  row: {
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
+    height: Dimensions.get("window").height / 2,
   },
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
-  text: {},
 });
 export default CitiesScreen;

@@ -13,8 +13,7 @@ export function geoLoadForecast(lat, lon) {
         dispatch({ type: LOAD_FORECAST, data: response.data, time: moment().format('MMMM Do YYYY, h:mm:ss a') });
       })
       .catch((error) => {
-        Alert.alert('Error' + error);
-        //todo dispatch error
+        dispatch({ type: ERROR_WEATHER, error: error });
       });
   };
 }

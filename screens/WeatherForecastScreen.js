@@ -1,10 +1,5 @@
-import {
-  View,
-  Text,
-  Dimensions,
-  StyleSheet,
-} from "react-native";
-import Weather from "../components/Weather";
+import { View, Text, Dimensions, StyleSheet } from "react-native";
+import Weather from "../components/Weather/Weather";
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,6 +11,8 @@ import WeekForecast from "../components/WeekForecast";
 import { loadForecast, geoLoadForecast } from "../store/actions/forecast";
 import units from "../constants/units";
 import ImageBackgroundComponent from "../components/ImageBackgroundComponent";
+import Footer from "../components/Footer";
+import { countTemp } from "../constants/constants";
 
 const WeatherForecastScreen = (props) => {
   const [isFetched, setIsFetched] = useState(false);
@@ -25,122 +22,67 @@ const WeatherForecastScreen = (props) => {
 
   const lat = props.route.params.lat;
   const lon = props.route.params.lon;
-console.log(props.route.params);
+  console.log(weather);
   const city = weather.city;
+  const dispatch = useDispatch();
+
   useEffect(() => {
     props.navigation.setOptions({ title: weather.city });
   }, [weather]);
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(setDayTime());
-  }, [dispatch]);
-
-  const image = daytime
-    ? require("../assets/day.png")
-    : require("../assets/night.png");
-
-  const countTemp = (settings, temperature) => {
-    const temp = settings[units.Celsius]
-      ? temperature - 273.15
-      : settings[units.Farenheit]
-      ? (temperature - 273.15) * 1.8 + 32
-      : temperature;
-    return temp;
-  };
-
   const fetchWeather = (lat, lon) => {
     dispatch(geoLoadForecast(lat, lon));
     dispatch(geoLoadWeather(lat, lon));
-    if (weather == {}) {
-      setIsFetched(true);
-    }
   };
 
   const fetchWeatherCity = (city) => {
-    // setIsFetched(false);
     dispatch(loadForecast(city));
     dispatch(loadWeather(city));
-    if (weather) {
-      setIsFetched(true);
-    }
   };
 
   useEffect(() => {
-    fetchWeather(lat, lon);
-  }, []);
+    if (props.route.params.fetchType === "city") {
+      console.log("lolllllllllllllllllllllllllllllll");
+      fetchWeatherCity(props.route.params.city);
+    } else {
+      fetchWeather(lat, lon);
+    }
+  }, [city]);
 
-  if (isFetched === false) {
+  if (weather.error === true || weather.error === undefined) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <ImageBackgroundComponent
+        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+      >
         <ActivityIndicator />
-      </View>
+      </ImageBackgroundComponent>
     );
   } else {
     return (
       <ImageBackgroundComponent>
-        <View style={styles.temperature}>
-          <Weather
-            icon={weather.icon}
-            city={weather.city}
-            temperature={countTemp(
-              settings.temperatureUnits,
-              weather.temperature
-            )}
-            clouds= {weather.clouds}
-            pressure={weather.pressure}
-            wind={weather.wind}
-            humidity={weather.humidity}
-            description={weather.description}
-            fetchWeather={() => fetchWeatherCity(city)}
-            fetchTime={weather.fetchTime}
-          />
-        </View>
+        <Weather
+          icon={weather.icon}
+          temperature={countTemp(
+            settings.temperatureUnits,
+            weather.temperature
+          )}
+          clouds={weather.clouds}
+          pressure={weather.pressure}
+          wind={weather.wind}
+          humidity={weather.humidity}
+          description={weather.description}
+          fetchWeather={() => fetchWeatherCity(city)}
+          fetchTime={weather.fetchTime}
+        />
         <WeekForecast />
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ fontFamily: "comic-neue" }}>
-            Updated: {weather.fetchTime}
-          </Text>
-          <TouchableOpacity
-            style={styles.refresh}
-            onPress={() => fetchWeatherCity(city)}
-          >
-            <Ionicons name={"md-refresh"} size={15} />
-          </TouchableOpacity>
-        </View>
-        <Text style={{ fontFamily: "comic-neue" }}>
-          Powered by: Open Weather
-        </Text>
+        <Footer
+          fetchTime={weather.fetchTime}
+          fetchWeather={() => fetchWeatherCity(city)}
+        />
       </ImageBackgroundComponent>
     );
   }
 };
 
-const styles = StyleSheet.create({
-  text: {
-    fontFamily: "comic-neue",
-  },
-  temperature: {
-    height: "50%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  refresh: {
-    padding: 10,
-  },
-  image: {
-    paddingTop: 10,
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "flex-end",
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
-  },
-});
+const styles = StyleSheet.create({});
 export default WeatherForecastScreen;

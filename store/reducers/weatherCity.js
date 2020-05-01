@@ -1,9 +1,15 @@
-import { LOAD_WEATHER_CITY } from "../actions/weatherCity";
+import {
+  LOAD_WEATHER_CITY,
+  ERROE,
+  ERROR_WEATHER_CITY,
+} from "../actions/weatherCity";
 
 const initialState = [];
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case ERROR_WEATHER_CITY:
+      return { ...state, error: true, errorText: action.error };
     case LOAD_WEATHER_CITY:
       const newArray = [...state];
       if (state.find((city) => city.city === action.data.city) === undefined) {
@@ -20,6 +26,7 @@ export default (state = initialState, action) => {
           snow: action.data.snow,
           wind: action.data.wind.speed,
           fetchTime: action.time,
+          error: false,
         };
         newArray.push(weatherCity);
         return newArray;

@@ -1,11 +1,16 @@
-import { LOAD_WEATHER } from "../actions/weather";
+import { LOAD_WEATHER, ERROR_WEATHER } from "../actions/weather";
 
 const initialState = {};
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case ERROR_WEATHER: 
+      return {...state, 
+        error: false,
+        errorMessage: action.error
+      }
+    
     case LOAD_WEATHER:
-     
       return {
         ...state,
         city: action.data.name,
@@ -19,7 +24,8 @@ export default (state = initialState, action) => {
         rain: action.data.rain,
         snow: action.data.snow,
         wind: action.data.wind.speed,
-        fetchTime: action.time
+        fetchTime: action.time,
+        error: false
       };
   }
   return state;

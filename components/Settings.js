@@ -1,112 +1,141 @@
 import React, { useState } from "react";
-import { View, Text, Dimensions, StyleSheet, CheckBox, Button, Alert } from "react-native";
+import {
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+  CheckBox,
+  Button,
+  Alert,
+} from "react-native";
 import { Switch } from "react-native-gesture-handler";
 import units from "../constants/units";
 import { useDispatch, useSelector } from "react-redux";
 
 import { saveSettings } from "../store/actions/settings";
+import ImageBackgroundComponent from "./ImageBackgroundComponent";
 
+const Settings = (props) => {
+  const dispatch = useDispatch();
+  const settings = useSelector((state) => state.settings);
+  //    const [isGeolocation, setIsGeolocation] = useState(settings.geolocation);
+  const [celsiusIsSelected, setCelsiusIsSelected] = useState(
+    settings.temperatureUnits[units.Celsius]
+  );
+  const [farenheitIsSelected, setFarenheitIsSelected] = useState(
+    settings.temperatureUnits[units.Farenheit]
+  );
+  const [kelvinIsSelected, setKelvinIsSelected] = useState(
+    settings.temperatureUnits[units.Kelvin]
+  );
 
-const Settings = props => {
-    const dispatch = useDispatch();
-    const settings = useSelector((state) => state.settings);
-    const [isGeolocation, setIsGeolocation] = useState(settings.geolocation);
-    const [celsiusIsSelected, setCelsiusIsSelected] = useState(settings.temperatureUnits[units.Celsius]);
-    const [farenheitIsSelected, setFarenheitIsSelected] = useState(settings.temperatureUnits[units.Farenheit]);
-    const [kelvinIsSelected, setKelvinIsSelected] = useState(settings.temperatureUnits[units.Kelvin]);
+  const toggleSwitchC = () =>
+    setCelsiusIsSelected((previousState) => !previousState);
 
-    const toggleSwitch = () => setIsGeolocation(previousState => !previousState);
+  const toggleSwitchF = () =>
+    setFarenheitIsSelected((previousState) => !previousState);
 
-    const submitOptionts = () => {
-        dispatch(saveSettings({
-            geolocation: isGeolocation,
-            celsius: celsiusIsSelected,
-            farenheit: farenheitIsSelected,
-            kelvin: kelvinIsSelected,
-        }));
-        Alert.alert("Succesfully saved!!!")
-    }
-    const selectTempOption = (temp) => {
-        if (temp === units.Celsius) {
-            setCelsiusIsSelected(true);
-            setKelvinIsSelected(false);
-            setFarenheitIsSelected(false);
-        } else if (temp === units.Farenheit) {
-            setFarenheitIsSelected(true);
-            setCelsiusIsSelected(false);
-            setKelvinIsSelected(false);
-        } else if (temp === units.Kelvin) {
-            setKelvinIsSelected(true);
-            setCelsiusIsSelected(false);
-            setFarenheitIsSelected(false);
-        }
-    };
+  const toggleSwitchK = () =>
+    setKelvinIsSelected((previousState) => !previousState);
 
-    return (
-        <View style={styles.settings}>
-            <Text style={{ ...styles.text, ...styles.head }}>Settings</Text>
-            <View style={styles.row}>
-                <Switch
-                    trackColor={{ false: "#767577", true: "#81b0ff" }}
-                    thumbColor={isGeolocation ? "#f5dd4b" : "#f4f3f4"}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={toggleSwitch}
-                    value={isGeolocation}
-                />
-                <Text>Use geolocation</Text>
-            </View>
-
-            <View style={styles.row}>
-                <CheckBox
-                    value={celsiusIsSelected}
-                    onValueChange={() => selectTempOption(units.Celsius)}
-                    style={styles.checkbox}
-                />
-                <Text>{units.Celsius}</Text>
-                <CheckBox
-                    value={farenheitIsSelected}
-                    onValueChange={() => selectTempOption(units.Farenheit)}
-                    style={styles.checkbox}
-                />
-                <Text>{units.Farenheit}</Text>
-                <CheckBox
-                    value={kelvinIsSelected}
-                    onValueChange={() => selectTempOption(units.Kelvin)}
-                />
-                <Text>{units.Kelvin}</Text>
-            </View>
-
-            <Button
-                title='Save changes'
-                onPress={submitOptionts}
-            />
-            <Text>geolocation: {settings.geolocation.toString()} </Text>
-            <Text>Celsius: {celsiusIsSelected.toString()} </Text>
-            <Text>Farenheit: {farenheitIsSelected.toString()} </Text>
-            <Text>Kelvin: {kelvinIsSelected.toString()} </Text>
-        </View>
+  const submitOptionts = () => {
+    dispatch(
+      saveSettings({
+        celsius: celsiusIsSelected,
+        farenheit: farenheitIsSelected,
+        kelvin: kelvinIsSelected,
+      })
     );
-}
+    Alert.alert("Succesfully saved!!!");
+  };
+  const selectTempOption = (temp) => {
+    if (temp === units.Celsius) {
+      setCelsiusIsSelected(true);
+      setKelvinIsSelected(false);
+
+      setFarenheitIsSelected(false);
+    } else if (temp === units.Farenheit) {
+      setFarenheitIsSelected(true);
+      setCelsiusIsSelected(false);
+
+      setKelvinIsSelected(false);
+    } else if (temp === units.Kelvin) {
+      setKelvinIsSelected(true);
+      setCelsiusIsSelected(false);
+
+      setFarenheitIsSelected(false);
+    }
+  };
+
+  return (
+    <ImageBackgroundComponent style={styles.container}>
+      <View style={styles.settings}>
+        <View style={{ alignItems: "flex-start" }}>
+          <View style={styles.row}>
+            <Switch
+              style={styles.switch}
+              trackColor={{ false: "#767577", true: "#81b0ff" }}
+              thumbColor={celsiusIsSelected ? "#f5dd4b" : "#f4f3f4"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={() => selectTempOption(units.Celsius)}
+              value={celsiusIsSelected}
+            />
+            <Text style={styles.text}>{units.Celsius}</Text>
+          </View>
+          <View style={styles.row}>
+            <Switch
+              style={styles.switch}
+              trackColor={{ false: "#767577", true: "#81b0ff" }}
+              thumbColor={farenheitIsSelected ? "#f5dd4b" : "#f4f3f4"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={() => selectTempOption(units.Farenheit)}
+              value={farenheitIsSelected}
+            />
+            <Text style={styles.text}>{units.Farenheit}</Text>
+          </View>
+          {/*}
+          <View style={styles.row}>
+            <Switch
+              style={styles.switch}
+              trackColor={{ false: "#767577", true: "#81b0ff" }}
+              thumbColor={kelvinIsSelected ? "#f5dd4b" : "#f4f3f4"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={() => selectTempOption(units.Kelvin)}
+              value={kelvinIsSelected}
+            />
+
+            <Text style={styles.text}>{units.Kelvin}</Text>
+  </View>*/}
+        </View>
+        <Button title="Save changes" onPress={submitOptionts} />
+      </View>
+    </ImageBackgroundComponent>
+  );
+};
 
 const styles = StyleSheet.create({
-    row: {
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexDirection: 'row',
-    },
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    settings: {
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: 5,
-        overflow: "hidden",
-        elevation: 3,
-        height: Dimensions.get("window").height * 0.85,
-        width: Dimensions.get("window").width * 0.9,
-    },
+  switch: {
+    padding: 10,
+  },
+  text: {
+    fontFamily: "comic-neue",
+    fontSize: 25,
+  },
+  row: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  container: {
+    paddingTop: 40,
+    flex: 1,
+    alignItems: "center",
+  },
+  settings: {
+    padding: 20,
+    justifyContent: "center",
+    borderRadius: 5,
+    overflow: "hidden",
+  },
 });
 export default Settings;

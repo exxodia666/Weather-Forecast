@@ -17,9 +17,10 @@ const ImageBackgroundComponent = (props) => {
 
 const styles = StyleSheet.create({
   image: {
+    borderWidth: 1,
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
 });
 export default ImageBackgroundComponent;
