@@ -84,7 +84,7 @@ const WeatherStackNavigator = () => {
         name={routes.Weather}
         component={WeatherForecastScreen}
         options={(props) => {
-        //  console.log(props);
+          //  console.log(props);
           return {
             headerLeft: () => {
               return (
@@ -94,7 +94,9 @@ const WeatherStackNavigator = () => {
                     title="Geo"
                     iconName="map-pin"
                     onPress={() => {
-                      props.navigation.navigate(routes.Location, {status: 'granted'});
+                      props.navigation.navigate(routes.Location, {
+                        ignoreFirstLaunch: true,
+                      });
                     }}
                   />
                 </HeaderButtons>
@@ -103,6 +105,7 @@ const WeatherStackNavigator = () => {
             title: props.route.params.city,
             headerTintColor: "#fff",
             headerTitleStyle: {
+              overflow: "hidden",
               fontFamily: "comic-neue",
             },
           };

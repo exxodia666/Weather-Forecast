@@ -14,6 +14,7 @@ import ImageBackgroundComponent from "../components/ImageBackgroundComponent";
 import Footer from "../components/Footer";
 import { countTemp } from "../constants/constants";
 import routes from "../navigation/routes";
+import { saveFirstLaunch } from "../store/actions/settings";
 
 const WeatherForecastScreen = (props) => {
   const settings = useSelector((state) => state.settings);
@@ -51,6 +52,9 @@ const WeatherForecastScreen = (props) => {
   useEffect(() => {
     if (props.route.params.fetchType !== "city") {
       fetchWeather(lat, lon);
+      if (weather.error === false) {
+        dispatch(saveFirstLaunch(weather.city));
+      }
     }
   }, [dispatch]);
 

@@ -14,26 +14,39 @@ import routes from "../navigation/routes";
 export default function LocationScreen(props) {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const settings = useSelector((state) => state.settings);
 
   const getLocation = async () => {
-    //    console.log(location);
+    //console.log("not");
     if (location === null) {
       let { status } = await Location.requestPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
       }
-      //  console.log(status);
       const location = await Location.getCurrentPositionAsync({});
-      //  console.log(location);
       props.navigation.navigate(routes.Weather, {
         lat: location.coords.latitude,
         lon: location.coords.longitude,
       });
     }
   };
+
   useEffect(() => {
-    //   console.log("AGG");
-    getLocation();
+   // console.log("ya tyt");
+    const ignore =
+      props.route.params !== undefined
+        ? props.route.params.ignoreFirstLaunch
+        : false;
+    //console.log(ignore);
+
+    if (settings.firstLaunсh === true || ignore) {
+      getLocation();
+    } else {
+      props.navigation.navigate(routes.Weather, {
+        fetchType: "city",
+        city: settings.city,
+      });
+    }
     return () => {
       setLocation(null);
     };

@@ -12,12 +12,13 @@ import { Switch } from "react-native-gesture-handler";
 import units from "../constants/units";
 import { useDispatch, useSelector } from "react-redux";
 
-import { saveSettings } from "../store/actions/settings";
+import { saveSettings, restoreDefault } from "../store/actions/settings";
 import ImageBackgroundComponent from "./ImageBackgroundComponent";
 
 const Settings = (props) => {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
+
   //    const [isGeolocation, setIsGeolocation] = useState(settings.geolocation);
   const [celsiusIsSelected, setCelsiusIsSelected] = useState(
     settings.temperatureUnits[units.Celsius]
@@ -93,6 +94,7 @@ const Settings = (props) => {
             />
             <Text style={styles.text}>{units.Farenheit}</Text>
           </View>
+          <Text style={styles.text}>City: {settings.city}</Text>
           {/*}
           <View style={styles.row}>
             <Switch
@@ -107,13 +109,24 @@ const Settings = (props) => {
             <Text style={styles.text}>{units.Kelvin}</Text>
   </View>*/}
         </View>
-        <Button title="Save changes" onPress={submitOptionts} />
+        <View style={styles.button}>
+          <Button title="Save changes" onPress={submitOptionts} />
+        </View>
+        <View style={styles.button}>
+          <Button
+            title="Restore settings"
+            onPress={() => dispatch(restoreDefault())}
+          />
+        </View>
       </View>
     </ImageBackgroundComponent>
   );
 };
 
 const styles = StyleSheet.create({
+  button: {
+    margin: 6,
+  },
   switch: {
     padding: 10,
   },

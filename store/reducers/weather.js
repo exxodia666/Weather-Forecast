@@ -4,12 +4,9 @@ const initialState = {};
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ERROR_WEATHER: 
-      return {...state, 
-        error: false,
-        errorMessage: action.error
-      }
-    
+    case ERROR_WEATHER:
+      return { ...state, error: false, errorMessage: action.error };
+
     case LOAD_WEATHER:
       return {
         ...state,
@@ -25,7 +22,7 @@ export default (state = initialState, action) => {
         snow: action.data.snow,
         wind: action.data.wind.speed,
         fetchTime: action.time,
-        error: false
+        error: false,
       };
   }
   return state;
