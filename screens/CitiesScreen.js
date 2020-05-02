@@ -28,7 +28,7 @@ const CitiesScreen = () => {
     cities.forEach((item) => {
       dispatch(loadWeatherCity(item.city));
     });
-  }, []);
+  }, [cities]);
 
   return (
     <ImageBackgroundComponent>
@@ -44,7 +44,7 @@ const CitiesScreen = () => {
             <Weather
               confirmation={true}
               deleteCity={() => deleteCityHander(weather.city)}
-              key={weather.fetchTime}
+              key={Math.random() * 1000}
               city={city}
               style={styles.weather}
               icon={weather.icon}

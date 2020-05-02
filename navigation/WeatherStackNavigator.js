@@ -20,6 +20,19 @@ const WeatherStackNavigator = () => {
       initialRouteName={routes.Location}
       screenOptions={(props) => {
         return {
+          headerLeft: () => {
+            return (
+              <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                <Item
+                  title="Geo"
+                  iconName="map-pin"
+                  onPress={() => {
+                    props.navigation.navigate(routes.Cities);
+                  }}
+                />
+              </HeaderButtons>
+            );
+          },
           headerRight: () => {
             return (
               <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>

@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import { View, Text, Dimensions, StyleSheet, BackHandler } from "react-native";
 import Weather from "../components/Weather/Weather";
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator } from "react-native";
@@ -13,6 +13,7 @@ import units from "../constants/units";
 import ImageBackgroundComponent from "../components/ImageBackgroundComponent";
 import Footer from "../components/Footer";
 import { countTemp } from "../constants/constants";
+import routes from "../navigation/routes";
 
 const WeatherForecastScreen = (props) => {
   const settings = useSelector((state) => state.settings);
@@ -25,6 +26,7 @@ const WeatherForecastScreen = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', function () { return true });
     props.navigation.setOptions({ title: weather.city });
   }, [weather]);
 
