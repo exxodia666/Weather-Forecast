@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   container: {
-    flexDirection: "row",
     width: Dimensions.get("window").width,
     flex: 1,
     justifyContent: "center",

@@ -26,7 +26,9 @@ const WeatherForecastScreen = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', function () { return true });
+    BackHandler.addEventListener("hardwareBackPress", function () {
+      return true;
+    });
     props.navigation.setOptions({ title: weather.city });
   }, [weather]);
 
@@ -47,8 +49,7 @@ const WeatherForecastScreen = (props) => {
   }, [props.route.params.city]);
 
   useEffect(() => {
-    if (props.route.params.fetchType === "city") {
-    } else {
+    if (props.route.params.fetchType !== "city") {
       fetchWeather(lat, lon);
     }
   }, [dispatch]);

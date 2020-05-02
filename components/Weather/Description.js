@@ -43,12 +43,17 @@ const styles = StyleSheet.create({
     margin: 2,
   },
   row: {
+    borderRadius: 5,
+    height: 30,
+    margin: 2,
+    padding: 2,
+    borderWidth: 1,
     flexDirection: "row",
   },
   container: {
     //  borderWidth: 1,
     padding: 4,
-    height: "50%",
+    flexDirection: "row",
     //flex: 3 / 5,
     justifyContent: "flex-end",
     alignItems: "flex-start",

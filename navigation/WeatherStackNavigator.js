@@ -11,6 +11,7 @@ import SettingsScreen from "../screens/SettingsScreen";
 import CitiesScreen from "../screens/CitiesScreen";
 import AddNewCityScreen from "../screens/AddNewCityScreen";
 import LocationScreen from "../screens/LocationScreen";
+import { Feather } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
 
@@ -20,19 +21,7 @@ const WeatherStackNavigator = () => {
       initialRouteName={routes.Location}
       screenOptions={(props) => {
         return {
-          headerLeft: () => {
-            return (
-              <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-                <Item
-                  title="Geo"
-                  iconName="map-pin"
-                  onPress={() => {
-                    props.navigation.navigate(routes.Cities);
-                  }}
-                />
-              </HeaderButtons>
-            );
-          },
+          //headerLeft: () => <></>,
           headerRight: () => {
             return (
               <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
@@ -94,15 +83,30 @@ const WeatherStackNavigator = () => {
       <Stack.Screen
         name={routes.Weather}
         component={WeatherForecastScreen}
-        options={({ route }) => ({
-          headerLeft: () => <></>,
-          headerLeft: () => <></>,
-          title: route.params.city,
-          headerTintColor: "#fff",
-          headerTitleStyle: {
-            fontFamily: "comic-neue",
-          },
-        })}
+        options={(props) => {
+        //  console.log(props);
+          return {
+            headerLeft: () => {
+              return (
+                <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                  <Item
+                    type="Feather"
+                    title="Geo"
+                    iconName="map-pin"
+                    onPress={() => {
+                      props.navigation.navigate(routes.Location, {status: 'granted'});
+                    }}
+                  />
+                </HeaderButtons>
+              );
+            },
+            title: props.route.params.city,
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontFamily: "comic-neue",
+            },
+          };
+        }}
       />
 
       <Stack.Screen
