@@ -1,13 +1,25 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
-//import { Ionicons, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 const WeatherInfo = (props) => {
+
+  const daytime = useSelector(state => state.daytime)
+
   return (
     <View style={styles.container}>
-      {props.city && (
-        <Text style={{ ...styles.text, ...styles.city }}>{props.city}</Text>
-      )}
+      <View style={styles.row}>
+        {props.confirmation ? (<TouchableOpacity style={styles.button} onPress={props.deleteCity && props.deleteCity}>
+          <Ionicons name={'md-trash'} color={daytime.time ? 'black' : 'white'} size={30} />
+        </TouchableOpacity>) : <></>}
+
+        {props.city && (
+          <Text style={{ ...styles.text, ...styles.city }}>{props.city}</Text>
+        )}
+      </View>
+
 
       <View style={styles.row}>
         <Image
@@ -26,6 +38,9 @@ const WeatherInfo = (props) => {
 };
 
 const styles = StyleSheet.create({
+  button: {
+    padding: 4
+  },
   city: {
     fontSize: 25,
     fontFamily: "comic-neue",
@@ -93,7 +108,7 @@ info: {
 
 block: {
  width: '50%',
-  
+
   justifyContent: "flex-end",
   alignItems: "flex-end",
   //backgroundColorwidth: '100%',

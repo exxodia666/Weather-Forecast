@@ -2,16 +2,16 @@ import React from "react";
 import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
 import WeatherInfo from "./WeatherInfo";
 import Description from "./Description";
-//import { url } from "../../../constants/constants";
+
 import { url } from "../../constants/constants";
-//import { Ionicons, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Weather = (props) => {
-  //console.log(props);
   let newStr = props.description[0].toUpperCase() + props.description.slice(1);
   return (
-    <View style={{...styles.container, ...props.style}}>
+    <View style={{ ...styles.container, ...props.style }}>
       <WeatherInfo
+        confirmation={props.confirmation}
+        deleteCity={props.deleteCity}
         style={props.style}
         city={props.city}
         url={url(props.icon)}
@@ -30,6 +30,9 @@ const Weather = (props) => {
 };
 
 const styles = StyleSheet.create({
+  button: {
+    padding: 4,
+  },
   container: {
     flexDirection: "row",
     width: Dimensions.get("window").width,
@@ -79,7 +82,7 @@ info: {
 
 block: {
  width: '50%',
-  
+
   justifyContent: "flex-end",
   alignItems: "flex-end",
   //backgroundColorwidth: '100%',

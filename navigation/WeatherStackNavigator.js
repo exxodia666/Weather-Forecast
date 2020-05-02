@@ -7,13 +7,10 @@ import CustomHeaderButton from "../components/CustomHeaderButton";
 //Screens
 import StartScreen from "../screens/StartScreen";
 import WeatherForecastScreen from "../screens/WeatherForecastScreen";
-//import ChartScreen from "../screens/ChartScreen";
-//import WeatherForecastChartScreen from "../screens/WeatherForecastChartScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import CitiesScreen from "../screens/CitiesScreen";
 import AddNewCityScreen from "../screens/AddNewCityScreen";
 import LocationScreen from "../screens/LocationScreen";
-import InfoScreen from "../screens/InfoScreen";
 
 const Stack = createStackNavigator();
 

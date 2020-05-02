@@ -11,7 +11,7 @@
     "orientation": "portrait",
     "icon": "./assets/hot.png",
     "splash": {
-      "image": "./assets/hot.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -29,6 +29,5 @@
       "versionCode": 1
     },
     "description": ""
-    
   }
 }

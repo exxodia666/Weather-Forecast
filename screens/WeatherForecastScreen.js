@@ -63,6 +63,7 @@ const WeatherForecastScreen = (props) => {
     return (
       <ImageBackgroundComponent>
         <Weather
+          confirmation={false}
           icon={weather.icon}
           temperature={countTemp(
             settings.temperatureUnits,

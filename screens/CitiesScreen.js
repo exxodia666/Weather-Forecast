@@ -20,43 +20,30 @@ const CitiesScreen = () => {
   const dispatch = useDispatch();
   const cities = useSelector((state) => state.city);
   const weatherCity = useSelector((state) => state.weatherCity);
-  const [isFetched, setIsFetched] = useState(false);
 
   const deleteCityHander = (city) => dispatch(deleteCity(city));
-
   const settings = useSelector((state) => state.settings);
-  console.log(weatherCity);
 
   useEffect(() => {
     cities.forEach((item) => {
       dispatch(loadWeatherCity(item.city));
-      if (!weatherCity.error) {
-        setIsFetched(true);
-      }
     });
-  }, [cities]);
+  }, []);
 
-  if (isFetched === false) {
-    return (
-      <ImageBackgroundComponent style={styles.container}>
-        <ActivityIndicator />
-      </ImageBackgroundComponent>
-    );
-  }
   return (
     <ImageBackgroundComponent>
       <ScrollView style={styles.container}>
-        {cities.map((city) => {
+        {cities.length !== 0 && cities.map((city) => {
           const weather = weatherCity.find(
             (weather) => weather.city === city.city
           );
           if (weather === undefined) {
             return;
           }
-          console.log(weather);
-
           return (
             <Weather
+              confirmation={true}
+              deleteCity={() => deleteCityHander(weather.city)}
               key={weather.fetchTime}
               city={city}
               style={styles.weather}

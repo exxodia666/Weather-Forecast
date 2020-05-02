@@ -21,12 +21,12 @@ export const countTemp = (settings, temperature) => {
   const temp = settings[units.Celsius]
     ? (temperature - 273.15).toFixed(0)
     : settings[units.Farenheit]
-    ? ((temperature - 273.15) * 1.8 + 32).toFixed(0)
-    : temperature;
+      ? ((temperature - 273.15) * 1.8 + 32).toFixed(0)
+      : temperature;
   return temp;
 };
 
-export const regEx = /^[a-zA-Z]+(?:[s-][a-zA-Z]+)*$/;
+export const regEx = /^[a-zA-Z ]+(?:[s-][a-zA-Z]+)*$/;
 
 export const createWeekDaysArray = (day) => {
   const firstDay = day;

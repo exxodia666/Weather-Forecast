@@ -6,14 +6,14 @@ import { regEx } from "../constants/constants";
 
 const InputComponent = (props) => {
   const [cityName, setCity] = useState("");
-
-  const setCityName = (city) => {
-    if (regEx.test(city)) {
-      setCity(city);
-    }
-  };
+  /*
+    const setCityName = (city) => {
+      if (regEx.test(city)) {
+        setCity(city);
+      }
+    };
+    */
   const inputHandler = (city) => {
-    console.log(city);
     props.handler(city);
   };
 
@@ -23,11 +23,11 @@ const InputComponent = (props) => {
         style={styles.textInput}
         placeholder="Enter City"
         value={cityName}
-        onChangeText={(text) => setCityName(text)}
+        onChangeText={(text) => setCity(text)}
       />
       <TouchableOpacity
         style={styles.refresh}
-        onPress={() => inputHandler(cityName)}
+        onPress={() => inputHandler(cityName.trim())}
       >
         <Ionicons name={props.icon} size={23} />
       </TouchableOpacity>

@@ -14,7 +14,7 @@ export function loadWeatherCity(city) {
         dispatch({ type: LOAD_WEATHER_CITY, data: response.data, time: moment().format('MMMM Do YYYY, h:mm:ss a') });
       })
       .catch((error) => {
-        dispatch({ type: ERROR_WEATHER_CITY, error: error });
+        //dispatch({ type: ERROR_WEATHER_CITY, error: error });
       });
   };
 }
