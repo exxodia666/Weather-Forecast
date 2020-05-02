@@ -21,7 +21,9 @@ const CitiesScreen = () => {
   const cities = useSelector((state) => state.city);
   const weatherCity = useSelector((state) => state.weatherCity);
   const [isFetched, setIsFetched] = useState(false);
+
   const deleteCityHander = (city) => dispatch(deleteCity(city));
+
   const settings = useSelector((state) => state.settings);
   console.log(weatherCity);
 
@@ -55,6 +57,7 @@ const CitiesScreen = () => {
 
           return (
             <Weather
+              key={weather.fetchTime}
               city={city}
               style={styles.weather}
               icon={weather.icon}

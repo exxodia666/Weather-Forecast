@@ -33,7 +33,7 @@ const WeekForecast = (props) => {
       } else {
         counter++;
         return (
-          <View style={styles.day}>
+          <View key={key} style={styles.day}>
             <Text style={styles.text}>{daytime}</Text>
             <Image
               style={styles.logo}
@@ -55,7 +55,7 @@ const WeekForecast = (props) => {
     week.pop();
     return week.map((element) => {
       return (
-        <View style={styles.week}>
+        <View key={element} style={styles.week}>
           <Text style={styles.text}>{element}</Text>
         </View>
       );
@@ -67,9 +67,14 @@ const WeekForecast = (props) => {
       <View style={styles.row}>{weekMap(labels)}</View>
 
       <View style={styles.row}>
-        {weather.map((item) => (
-          <View style={styles.column}>{func(item)}</View>
-        ))}
+        {weather.map((item) => {
+          let key = (Math.random() * 10000).toFixed(5);
+          return (
+            <View key={key} style={styles.column}>
+              {func(item)}
+            </View>
+          );
+        })}
       </View>
     </View>
   );

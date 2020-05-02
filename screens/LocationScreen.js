@@ -17,19 +17,20 @@ export default function LocationScreen(props) {
   const settings = useSelector((state) => state.settings);
 
   useEffect(() => {
+    console.log('Geo');
     if (settings.geolocation) {
       (async () => {
         let { status } = await Location.requestPermissionsAsync();
         if (status !== "granted") {
           setErrorMsg("Permission to access location was denied");
         }
+        console.log(location);
         const location = await Location.getCurrentPositionAsync({});
         setLocation(location);
       })();
     }
   }, []);
   if (location === null) {
-
     return (
       <ImageBackgroundComponent style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <ActivityIndicator />

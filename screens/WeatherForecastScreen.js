@@ -15,14 +15,12 @@ import Footer from "../components/Footer";
 import { countTemp } from "../constants/constants";
 
 const WeatherForecastScreen = (props) => {
-  const [isFetched, setIsFetched] = useState(false);
   const settings = useSelector((state) => state.settings);
   const weather = useSelector((state) => state.weather);
-  const daytime = useSelector((state) => state.daytime.time);
 
   const lat = props.route.params.lat;
   const lon = props.route.params.lon;
-  console.log(weather);
+
   const city = weather.city;
   const dispatch = useDispatch();
 
@@ -43,12 +41,11 @@ const WeatherForecastScreen = (props) => {
   useEffect(() => {
     if (props.route.params.fetchType === "city") {
       fetchWeatherCity(props.route.params.city);
-    } 
+    }
   }, [props.route.params.city]);
 
   useEffect(() => {
     if (props.route.params.fetchType === "city") {
-     
     } else {
       fetchWeather(lat, lon);
     }
@@ -89,5 +86,4 @@ const WeatherForecastScreen = (props) => {
   }
 };
 
-const styles = StyleSheet.create({});
 export default WeatherForecastScreen;
