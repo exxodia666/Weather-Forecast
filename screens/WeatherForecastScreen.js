@@ -42,8 +42,7 @@ const WeatherForecastScreen = (props) => {
     dispatch(loadForecast(city));
     dispatch(loadWeather(city));
   };
-  console.log(settings.firstLaunch);
-  console.log(props.route.params.fetchType);
+  
   useEffect(() => {
     if (props.route.params.fetchType === "city" && settings.firstLaunch) {
       console.log(1);

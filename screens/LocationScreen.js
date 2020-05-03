@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 import ImageBackgroundComponent from "../components/ImageBackgroundComponent";
 import routes from "../navigation/routes";
 import InputComponent from "../components/InputComponent";
-import { BorderlessButton } from "react-native-gesture-handler";
 
 export default function LocationScreen(props) {
   const [location, setLocation] = useState(null);
@@ -22,12 +21,11 @@ export default function LocationScreen(props) {
     //console.log("not");
     if (location === null) {
       const status = await Location.requestPermissionsAsync();
-      //console.log(status);
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        setLocation(false);
-      } else if (status === true) {
-        const location = await Location.getCurrentPositionAsync({});
+      if (status.granted) {
+        const location = await Location.getCurrentPositionAsync({}).catch(() => {
+          setLocation(false);
+          setErrorMsg("Permission to access location was denied");
+        });
         props.navigation.navigate(routes.Weather, {
           lat: location.coords.latitude,
           lon: location.coords.longitude,
@@ -45,13 +43,10 @@ export default function LocationScreen(props) {
   };
 
   useEffect(() => {
-    // console.log("ya tyt");
     const ignore =
       props.route.params !== undefined
         ? props.route.params.ignoreFirstLaunch
         : false;
-    //console.log(ignore);
-
     if (settings.firstLaunсh === true || ignore) {
       getLocation();
     } else {

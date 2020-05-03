@@ -12,6 +12,7 @@ import CitiesScreen from "../screens/CitiesScreen";
 import AddNewCityScreen from "../screens/AddNewCityScreen";
 import LocationScreen from "../screens/LocationScreen";
 import { Feather } from "@expo/vector-icons";
+import { Dimensions } from "react-native";
 
 const Stack = createStackNavigator();
 
@@ -105,6 +106,7 @@ const WeatherStackNavigator = () => {
             title: props.route.params.city,
             headerTintColor: "#fff",
             headerTitleStyle: {
+              width: Dimensions.get('window').width / 2,
               overflow: "hidden",
               fontFamily: "comic-neue",
             },
