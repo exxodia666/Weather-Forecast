@@ -42,21 +42,35 @@ const WeatherForecastScreen = (props) => {
     dispatch(loadForecast(city));
     dispatch(loadWeather(city));
   };
-
+  console.log(settings.firstLaunch);
+  console.log(props.route.params.fetchType);
   useEffect(() => {
-    if (props.route.params.fetchType === "city") {
+    if (props.route.params.fetchType === "city" && settings.firstLaunch) {
+      console.log(1);
       fetchWeatherCity(props.route.params.city);
     }
-  }, [props.route.params.city]);
+  }, [props]);
 
   useEffect(() => {
     if (props.route.params.fetchType !== "city") {
+      console.log(2);
       fetchWeather(lat, lon);
       if (weather.error === false) {
         dispatch(saveFirstLaunch(weather.city));
       }
     }
-  }, [dispatch]);
+  }, [props]);
+
+  useEffect(() => {
+    if (props.route.params.fetchType === "city" && !settings.firstLaunch) {
+      console.log(3);
+      console.log(props.route.params.city);
+      fetchWeatherCity(props.route.params.city);
+      if (weather.error === false) {
+        dispatch(saveFirstLaunch(weather.city));
+      }
+    }
+  }, [props]);
 
   if (weather.error === true || weather.error === undefined) {
     return (

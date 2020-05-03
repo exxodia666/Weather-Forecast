@@ -10,6 +10,8 @@ import * as Location from "expo-location";
 import { useDispatch, useSelector } from "react-redux";
 import ImageBackgroundComponent from "../components/ImageBackgroundComponent";
 import routes from "../navigation/routes";
+import InputComponent from "../components/InputComponent";
+import { BorderlessButton } from "react-native-gesture-handler";
 
 export default function LocationScreen(props) {
   const [location, setLocation] = useState(null);
@@ -19,12 +21,12 @@ export default function LocationScreen(props) {
   const getLocation = async () => {
     //console.log("not");
     if (location === null) {
-      console.log(await (await Location.requestPermissionsAsync()).granted);
-      console.log(status);
+      const status = await Location.requestPermissionsAsync();
+      //console.log(status);
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         setLocation(false);
-      } else if (status === "granted") {
+      } else if (status === true) {
         const location = await Location.getCurrentPositionAsync({});
         props.navigation.navigate(routes.Weather, {
           lat: location.coords.latitude,
@@ -32,7 +34,14 @@ export default function LocationScreen(props) {
         });
       }
     }
-    console.log(location);
+    //console.log(location);
+  };
+
+  const handleInput = (city) => {
+    props.navigation.navigate(routes.Weather, {
+      fetchType: "city",
+      city: city,
+    });
   };
 
   useEffect(() => {
@@ -65,9 +74,11 @@ export default function LocationScreen(props) {
       </ImageBackgroundComponent>
     );
   }
+
   if (location === false) {
     return (
       <ImageBackgroundComponent style={styles.container}>
+        <InputComponent icon="md-search" handler={handleInput} />
         <Text>{errorMsg}</Text>
       </ImageBackgroundComponent>
     );
@@ -76,8 +87,9 @@ export default function LocationScreen(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    paddingBottom: 20,
+    //   flex: 1,
+    //justifyContent: "center",
+    //    alignItems: "center",
   },
 });
