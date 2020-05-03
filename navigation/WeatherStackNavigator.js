@@ -61,6 +61,7 @@ const WeatherStackNavigator = () => {
           },
           headerTintColor: "#fff",
           headerTitleStyle: {
+            overflow: "hidden",
             fontWeight: "bold",
           },
         };
@@ -70,7 +71,6 @@ const WeatherStackNavigator = () => {
         name={routes.Location}
         component={LocationScreen}
         options={({ route }) => ({
-          headerLeft: () => <></>,
           headerRight: () => <></>,
           title: "Weather App",
           headerTintColor: "#fff",

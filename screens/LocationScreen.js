@@ -19,20 +19,24 @@ export default function LocationScreen(props) {
   const getLocation = async () => {
     //console.log("not");
     if (location === null) {
-      let { status } = await Location.requestPermissionsAsync();
+      console.log(await (await Location.requestPermissionsAsync()).granted);
+      console.log(status);
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
+        setLocation(false);
+      } else if (status === "granted") {
+        const location = await Location.getCurrentPositionAsync({});
+        props.navigation.navigate(routes.Weather, {
+          lat: location.coords.latitude,
+          lon: location.coords.longitude,
+        });
       }
-      const location = await Location.getCurrentPositionAsync({});
-      props.navigation.navigate(routes.Weather, {
-        lat: location.coords.latitude,
-        lon: location.coords.longitude,
-      });
     }
+    console.log(location);
   };
 
   useEffect(() => {
-   // console.log("ya tyt");
+    // console.log("ya tyt");
     const ignore =
       props.route.params !== undefined
         ? props.route.params.ignoreFirstLaunch
@@ -61,12 +65,13 @@ export default function LocationScreen(props) {
       </ImageBackgroundComponent>
     );
   }
-
-  return (
-    <>
-      <Text>{errorMsg}</Text>
-    </>
-  );
+  if (location === false) {
+    return (
+      <ImageBackgroundComponent style={styles.container}>
+        <Text>{errorMsg}</Text>
+      </ImageBackgroundComponent>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
