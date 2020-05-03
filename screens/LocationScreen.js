@@ -17,14 +17,42 @@ export default function LocationScreen(props) {
   const [errorMsg, setErrorMsg] = useState(null);
   const settings = useSelector((state) => state.settings);
 
+
+  //console.log(settings.firstLaunсh);
+
+  useEffect(() => {
+    const ignore =
+      props.route.params !== undefined
+        ? props.route.params.ignoreFirstLaunch
+        : false;
+    if (!settings.firstLaunсh && !ignore) {
+      console.log("Alo huesos");
+      props.navigation.navigate(routes.Weather, {
+        fetchType: "city",
+        city: settings.city,
+      });
+    } if (settings.firstLaunсh) {
+      getLocation();
+    }
+  }, []);
+
+
   const getLocation = async () => {
-    //console.log("not");
+    // console.log(location);
     if (location === null) {
       const status = await Location.requestPermissionsAsync();
       if (status.granted) {
         const location = await Location.getCurrentPositionAsync({}).catch(() => {
-          setLocation(false);
-          setErrorMsg("Permission to access location was denied");
+          if (!settings.firstLaunсh) {
+            props.navigation.navigate(routes.Weather, {
+              fetchType: "city",
+              city: settings.city,
+            });
+          }
+          else if (settings.firstLaunсh) {
+            setLocation(false);
+            setErrorMsg("Permission to access location was denied");
+          }
         });
         props.navigation.navigate(routes.Weather, {
           lat: location.coords.latitude,
@@ -39,17 +67,26 @@ export default function LocationScreen(props) {
     props.navigation.navigate(routes.Weather, {
       fetchType: "city",
       city: city,
+      //from: 'start'
     });
   };
-
+  useEffect(() => {
+    console.log(settings.firstLaunсh);
+    if (!settings.firstLaunсh) {
+      console.log('Suka');
+      getLocation();
+    }
+  });
   useEffect(() => {
     const ignore =
       props.route.params !== undefined
         ? props.route.params.ignoreFirstLaunch
         : false;
-    if (settings.firstLaunсh === true || ignore) {
+   // console.log('Lol:' + ignore);
+    if (ignore) {
+     // console.log('alo blya');
       getLocation();
-    } else {
+    } else if (!settings.firstLaunсh) {
       props.navigation.navigate(routes.Weather, {
         fetchType: "city",
         city: settings.city,
@@ -69,8 +106,8 @@ export default function LocationScreen(props) {
       </ImageBackgroundComponent>
     );
   }
-
-  if (location === false) {
+  //console.log(location);
+  if (!location) {
     return (
       <ImageBackgroundComponent style={styles.container}>
         <InputComponent icon="md-search" handler={handleInput} />

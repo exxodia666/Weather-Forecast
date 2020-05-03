@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
-import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import { Ionicons } from "@expo/vector-icons";
-
 import ImageBackgroundComponent from "../components/ImageBackgroundComponent";
 import routes from "../navigation/routes";
 import InputComponent from "../components/InputComponent";
@@ -12,6 +9,7 @@ const StartScreen = (props) => {
     props.navigation.navigate(routes.Weather, {
       city: cityName,
       fetchType: "city",
+      from: 'start'
     });
   };
   return (

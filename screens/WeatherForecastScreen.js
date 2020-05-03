@@ -19,11 +19,11 @@ import { saveFirstLaunch } from "../store/actions/settings";
 const WeatherForecastScreen = (props) => {
   const settings = useSelector((state) => state.settings);
   const weather = useSelector((state) => state.weather);
-
   const lat = props.route.params.lat;
   const lon = props.route.params.lon;
 
   const city = weather.city;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -42,11 +42,25 @@ const WeatherForecastScreen = (props) => {
     dispatch(loadForecast(city));
     dispatch(loadWeather(city));
   };
-  
+
+
+  useEffect(() => {
+    if (props.route.params.fetchType === "city" && !settings.firstLaunch) {
+      console.log(-1);
+      fetchWeatherCity(props.route.params.city);
+      if (weather.error === false) {
+        dispatch(saveFirstLaunch(weather.city));
+      }
+    }
+  }, [props]);
+
   useEffect(() => {
     if (props.route.params.fetchType === "city" && settings.firstLaunch) {
       console.log(1);
       fetchWeatherCity(props.route.params.city);
+      if (weather.error === false) {
+        dispatch(saveFirstLaunch(weather.city));
+      }
     }
   }, [props]);
 
@@ -58,16 +72,15 @@ const WeatherForecastScreen = (props) => {
         dispatch(saveFirstLaunch(weather.city));
       }
     }
-  }, [props]);
+  }, []);
+
+  //console.log(props.route.params.fetchType);
 
   useEffect(() => {
-    if (props.route.params.fetchType === "city" && !settings.firstLaunch) {
+    if (props.route.params.fetchType == "city" && props.route.params.from == "start") {
       console.log(3);
-      console.log(props.route.params.city);
+      //console.log(props.route.params.city);
       fetchWeatherCity(props.route.params.city);
-      if (weather.error === false) {
-        dispatch(saveFirstLaunch(weather.city));
-      }
     }
   }, [props]);
 
