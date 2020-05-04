@@ -1,4 +1,4 @@
-import { BackHandler } from "react-native";
+import { BackHandler, Alert } from "react-native";
 import Weather from "../components/Weather/Weather";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
@@ -19,12 +19,8 @@ const WeatherForecastScreen = (props) => {
   const dispatch = useDispatch();
 
   const settings = useSelector((state) => state.settings);
-
-  const [weather, setWeather] = useState();
-
-  //console.log(weather);
-  const city = weather.city;
-
+  const weather = useSelector((state) => state.weather);
+  const weatherLength = Object.keys(weather).length;
   const [location, setLocation] = useState(null);
   //  const [error, setError] = useState(null);
 
@@ -35,26 +31,27 @@ const WeatherForecastScreen = (props) => {
     if (!weather.error) props.navigation.setOptions({ title: weather.city });
   }, [weather]);
 
-  const fetchWeather = (lat, lon) => {
-    console.log("LOCATION: ", lat, " ", lon);
-    dispatch(geoLoadForecast(lat, lon));
-    dispatch(geoLoadWeather(lat, lon));
-    setWeather(useSelector((state) => state.weather))
-    if (!weather.error && weather.error !== undefined) {
+  const fetchWeather = async (lat, lon) => {
+    "LOCATION: ", lat, " ", lon;
+    await dispatch(geoLoadForecast(lat, lon));
+    await dispatch(geoLoadWeather(lat, lon));
+    if (weatherLength) {
       setIsFetched(true);
       setDiplay(false);
+      setLocation(null);
     }
   };
 
-  const fetchWeatherCity = (city) => {
-    dispatch(loadForecast(city));
-    dispatch(loadWeather(city));
-    if (!weather.error && weather.error !== undefined) {
-      // console.log("disp save");
-      dispatch(saveFirstLaunch(weather.city));
+  const fetchWeatherCity = async (city) => {
+    await dispatch(loadForecast(city));
+    await dispatch(loadWeather(city));
+    if (weatherLength !== 0 && true) {
+      ("display");
       setIsFetched(true);
       setDiplay(false);
-      // console.log(settings.city);
+    }
+    if (settings.firstLaunсh) {
+      dispatch(saveFirstLaunch(weather.city));
     }
   };
 
@@ -69,44 +66,44 @@ const WeatherForecastScreen = (props) => {
         console.log(location);
       })
       .catch((err) => {
-        const useLocation = props.route.params !== undefined ? props.route.params.useLocation : false;
+        // Alert.alert('You shold allow geolocation!')
+        const useLocation =
+          props.route.params !== undefined
+            ? props.route.params.useLocation
+            : false;
         if (!useLocation) setDiplay(true);
       });
   };
 
-  //console.log(weather);
+  //(weather);
 
   const cityHandler = (city) => {
-    //console.log(city);
     fetchWeatherCity(city);
-    //  console.log("dispal");
-    if (!weather.error && weather.error !== undefined) {
-      //console.log("disp save");
+    if (weatherLength !== 0) {
       dispatch(saveFirstLaunch(weather.city));
     }
   };
 
   useEffect(() => {
-    console.log('use Effect');
-    if (settings.firstLaunсh) {
-      //console.log(settings.city);
-      // console.log(settings.city);
-      if (!settings.city) getLocation();
-      console.log(location);
-      if (location) {
-        fetchWeather(location.lat, location.lon);
-        console.log(weather);
-        if (!weather.error && weather.error !== undefined) {
-          // console.log("disp save");
-          dispatch(saveFirstLaunch(weather.city));
+    if (weatherLength == 0) {
+      if (settings.firstLaunсh) {
+        if (!settings.city) {
+          getLocation();
+          if (location) {
+            fetchWeather(location.lat, location.lon);
+            if (weatherLength !== 0) {
+              dispatch(saveFirstLaunch(weather.city));
+            }
+          } else {
+            //  Alert.alert("Error");
+          }
         }
-      } else {
-      }
-    } else if (!settings.firstLaunсh) {
-      //console.log("Fetching");
-      fetchWeatherCity(settings.city);
-      if (!weather.error && weather.error !== undefined) {
-        // console.log(weather);
+      } else if (!settings.firstLaunсh) {
+        ("Fetching");
+        fetchWeatherCity(settings.city);
+        if (!weather.error && weather.error !== undefined) {
+          // (weather);
+        }
       }
     }
     return () => {
@@ -114,34 +111,38 @@ const WeatherForecastScreen = (props) => {
       setIsFetched(false);
       setLocation(null);
     };
-  }, []);
-  /*
-    useEffect(() => {
-      const useLocation =
-        props.route.params !== undefined ? props.route.params.useLocation : false;
-      console.log(useLocation);
-      if (useLocation) {
-        getLocation();
-        if (location) {
-          fetchWeather(location.lat, location.lon);
+  }, [location, weatherLength]);
+
+  useEffect(() => {
+    const useLocation =
+      props.route.params !== undefined ? props.route.params.useLocation : false;
+    console.log(useLocation);
+    if (useLocation) {
+      setIsFetched(false);
+      getLocation();
+      console.log(location);
+      if (location) {
+        fetchWeather(location.lat, location.lon);
+        if (weatherLength !== 0) {
           setLocation(null);
+          props.navigation.setOptions({ useLocation: null });
         }
       }
-      return () => {
-        setIsFetched(true);
-        setDiplay(false);
-      };
-    }, //[props, settings, isFetched]
-    );
-  */
-  //console.log(display);
+    }
+    return () => {
+      setIsFetched(true);
+      setDiplay(false);
+    };
+  }, [props.route.params, settings, weatherLength, location]);
+
+  //(display);
 
   if (display) {
     return <InputComponent icon="md-search" handler={cityHandler} />;
   }
-  if (!isFetched) {
+  if (weatherLength == 0) {
     return <Loader />;
-  } else if (!weather.error && weather.error !== undefined) {
+  } else if (weatherLength !== 0) {
     return (
       <ImageBackgroundComponent>
         <Weather
@@ -175,7 +176,7 @@ export default WeatherForecastScreen;
 
   useEffect(() => {
     if (props.route.params.fetchType === "city" && !settings.firstLaunch) {
-      console.log(-1);
+      (-1);
       fetchWeatherCity(props.route.params.city);
       if (weather.error === false) {
         dispatch(saveFirstLaunch(weather.city));
@@ -185,7 +186,7 @@ export default WeatherForecastScreen;
 
   useEffect(() => {
     if (props.route.params.fetchType === "city" && settings.firstLaunch) {
-      console.log(1);
+      (1);
       fetchWeatherCity(props.route.params.city);
       if (weather.error === false) {
         dispatch(saveFirstLaunch(weather.city));
@@ -195,7 +196,7 @@ export default WeatherForecastScreen;
 
   useEffect(() => {
     if (props.route.params.fetchType !== "city") {
-      console.log(2);
+      (2);
       fetchWeather(lat, lon);
       if (weather.error === false) {
         dispatch(saveFirstLaunch(weather.city));
@@ -203,12 +204,12 @@ export default WeatherForecastScreen;
     }
   }, []);
 
-  //console.log(props.route.params.fetchType);
+  //(props.route.params.fetchType);
 
   useEffect(() => {
     if (props.route.params.fetchType == "city" && props.route.params.from == "start") {
-      console.log(3);
-      //console.log(props.route.params.city);
+      (3);
+      //(props.route.params.city);
       fetchWeatherCity(props.route.params.city);
     }
   }, [props]);
