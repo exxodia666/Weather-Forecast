@@ -10,8 +10,7 @@ import WeatherForecastScreen from "../screens/WeatherForecastScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import CitiesScreen from "../screens/CitiesScreen";
 import AddNewCityScreen from "../screens/AddNewCityScreen";
-import LocationScreen from "../screens/LocationScreen";
-import { Feather } from "@expo/vector-icons";
+
 import { Dimensions } from "react-native";
 
 const Stack = createStackNavigator();
@@ -19,7 +18,7 @@ const Stack = createStackNavigator();
 const WeatherStackNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName={routes.Location}
+      initialRouteName={routes.Weather}
       screenOptions={(props) => {
         return {
           //headerLeft: () => <></>,
@@ -69,19 +68,6 @@ const WeatherStackNavigator = () => {
       }}
     >
       <Stack.Screen
-        name={routes.Location}
-        component={LocationScreen}
-        options={({ route }) => ({
-          headerRight: () => <></>,
-          title: "Weather App",
-          headerTintColor: "#fff",
-          headerTitleStyle: {
-            fontFamily: "comic-neue",
-          },
-        })}
-      />
-
-      <Stack.Screen
         name={routes.Weather}
         component={WeatherForecastScreen}
         options={(props) => {
@@ -95,18 +81,18 @@ const WeatherStackNavigator = () => {
                     title="Geo"
                     iconName="map-pin"
                     onPress={() => {
-                      props.navigation.navigate(routes.Location, {
-                        ignoreFirstLaunch: true,
+                      console.log(props)
+                      props.navigation.navigate(routes.Weather, {
+                        useLocation: true,
                       });
                     }}
                   />
                 </HeaderButtons>
               );
             },
-            title: props.route.params.city,
             headerTintColor: "#fff",
             headerTitleStyle: {
-              width: Dimensions.get('window').width / 2,
+              width: Dimensions.get("window").width / 2,
               overflow: "hidden",
               fontFamily: "comic-neue",
             },

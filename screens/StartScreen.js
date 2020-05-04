@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
 import ImageBackgroundComponent from "../components/ImageBackgroundComponent";
 import routes from "../navigation/routes";
 import InputComponent from "../components/InputComponent";
+import { useDispatch } from "react-redux";
+import { loadWeather } from "../store/actions/weather";
 
 const StartScreen = (props) => {
+  const dispatch = useDispatch();
+
   const handler = (cityName) => {
+    dispatch(loadWeather(cityName));
     props.navigation.navigate(routes.Weather, {
       city: cityName,
-      fetchType: "city",
-      from: 'start'
+      //searchOrWeather: true,
     });
   };
   return (
