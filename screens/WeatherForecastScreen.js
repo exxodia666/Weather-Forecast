@@ -20,7 +20,7 @@ const WeatherForecastScreen = (props) => {
 
   const settings = useSelector((state) => state.settings);
 
-  const weather = useSelector((state) => state.weather);
+  const [weather, setWeather] = useState();
 
   //console.log(weather);
   const city = weather.city;
@@ -37,9 +37,9 @@ const WeatherForecastScreen = (props) => {
 
   const fetchWeather = (lat, lon) => {
     console.log("LOCATION: ", lat, " ", lon);
-
     dispatch(geoLoadForecast(lat, lon));
     dispatch(geoLoadWeather(lat, lon));
+    setWeather(useSelector((state) => state.weather))
     if (!weather.error && weather.error !== undefined) {
       setIsFetched(true);
       setDiplay(false);
@@ -69,7 +69,8 @@ const WeatherForecastScreen = (props) => {
         console.log(location);
       })
       .catch((err) => {
-        if (!props.route.params.useLocation) setDiplay(true);
+        const useLocation = props.route.params !== undefined ? props.route.params.useLocation : false;
+        if (!useLocation) setDiplay(true);
       });
   };
 
@@ -86,13 +87,15 @@ const WeatherForecastScreen = (props) => {
   };
 
   useEffect(() => {
+    console.log('use Effect');
     if (settings.firstLaunсh) {
       //console.log(settings.city);
       // console.log(settings.city);
       if (!settings.city) getLocation();
+      console.log(location);
       if (location) {
         fetchWeather(location.lat, location.lon);
-        //console.log(weather);
+        console.log(weather);
         if (!weather.error && weather.error !== undefined) {
           // console.log("disp save");
           dispatch(saveFirstLaunch(weather.city));
@@ -111,25 +114,26 @@ const WeatherForecastScreen = (props) => {
       setIsFetched(false);
       setLocation(null);
     };
-  }, [weather, settings, location]);
-
-  useEffect(() => {
-    const useLocation =
-      props.route.params !== undefined ? props.route.params.useLocation : false;
-    console.log(useLocation);
-    if (useLocation) {
-      getLocation();
-      if (location) {
-        fetchWeather(location.lat, location.lon);
-        setLocation(null);
+  }, []);
+  /*
+    useEffect(() => {
+      const useLocation =
+        props.route.params !== undefined ? props.route.params.useLocation : false;
+      console.log(useLocation);
+      if (useLocation) {
+        getLocation();
+        if (location) {
+          fetchWeather(location.lat, location.lon);
+          setLocation(null);
+        }
       }
-    }
-    return () => {
-      setIsFetched(true);
-      setDiplay(false);
-    };
-  }, [props, settings, isFetched]);
-
+      return () => {
+        setIsFetched(true);
+        setDiplay(false);
+      };
+    }, //[props, settings, isFetched]
+    );
+  */
   //console.log(display);
 
   if (display) {
