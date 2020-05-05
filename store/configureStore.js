@@ -18,7 +18,7 @@ const persistConfig = {
   key: "root",
   storage: AsyncStorage,
   stateReconciler: autoMergeLevel2,
-  blacklist: ['weather', 'daytime', 'forecast', 'weatherCity']
+  blacklist: ['weather', 'daytime', 'forecast']
 };
 const rootReducer = persistCombineReducers(persistConfig, {
   weather: weather,

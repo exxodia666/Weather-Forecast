@@ -5,21 +5,38 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 
 const WeatherInfo = (props) => {
-
-  const daytime = useSelector(state => state.daytime)
+  const daytime = useSelector((state) => state.daytime);
 
   return (
     <View style={styles.container}>
-      <View style={styles.row}>
-        {props.confirmation ? (<TouchableOpacity style={styles.button} onPress={props.deleteCity && props.deleteCity}>
-          <Ionicons name={'md-trash'} color={daytime.time ? 'black' : 'white'} size={30} />
-        </TouchableOpacity>) : <></>}
+      <View style={{ ...styles.row, ...styles.spaces }}>
+        {props.handler && (
+          <TouchableOpacity onPress={() => props.handler(props.city)}>
+            <Ionicons
+              size={30}
+              name="md-information-circle"
+              color={daytime.time ? "black" : "white"}
+            />
+          </TouchableOpacity>
+        )}
 
         {props.city && (
           <Text style={{ ...styles.text, ...styles.city }}>{props.city}</Text>
         )}
-      </View>
 
+        {props.confirmation && (
+          <TouchableOpacity
+            style={styles.button}
+            onPress={props.deleteCity && props.deleteCity}
+          >
+            <Ionicons
+              name={"md-trash"}
+              color={daytime.time ? "black" : "white"}
+              size={30}
+            />
+          </TouchableOpacity>
+        )}
+      </View>
 
       <View style={styles.row}>
         <Image
@@ -36,20 +53,26 @@ const WeatherInfo = (props) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
+  spaces: {
+    //width: Dimensions.get('window').width,
+    justifyContent: "space-evenly",
+  },
   button: {
-    padding: 4
+    padding: 4,
   },
   city: {
+   // color: daytime.time ? "black" : "white",
     fontSize: 25,
     fontFamily: "comic-neue",
   },
-  text: { fontSize: 20 },
+  text: { 
+    
+    fontSize: 20 },
   row: {
     // borderWidth: 1,
     alignItems: "center",
-    //justifyContent: "center",
+    justifyContent: "center",
     flexDirection: "row",
   },
   container: {

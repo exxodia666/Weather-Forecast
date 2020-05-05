@@ -4,12 +4,15 @@ import WeatherInfo from "./WeatherInfo";
 import Description from "./Description";
 
 import { url } from "../../constants/constants";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Ionicons } from "@expo/vector-icons";
 
 const Weather = (props) => {
   let newStr = props.description[0].toUpperCase() + props.description.slice(1);
   return (
     <View style={{ ...styles.container, ...props.style }}>
       <WeatherInfo
+        handler={props.handler}
         confirmation={props.confirmation}
         deleteCity={props.deleteCity}
         style={props.style}

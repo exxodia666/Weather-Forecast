@@ -31,6 +31,7 @@ const WeatherStackNavigator = () => {
                     props.navigation.navigate(routes.Cities);
                   }}
                 />
+                {/*
                 <Item
                   title="Search"
                   iconName="md-search"
@@ -73,23 +74,6 @@ const WeatherStackNavigator = () => {
         options={(props) => {
           //  console.log(props);
           return {
-            headerLeft: () => {
-              return (
-                <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-                  <Item
-                    type="Feather"
-                    title="Geo"
-                    iconName="map-pin"
-                    onPress={() => {
-                      console.log(props)
-                      props.navigation.navigate(routes.Weather, {
-                        useLocation: true,
-                      });
-                    }}
-                  />
-                </HeaderButtons>
-              );
-            },
             headerTintColor: "#fff",
             headerTitleStyle: {
               width: Dimensions.get("window").width / 2,

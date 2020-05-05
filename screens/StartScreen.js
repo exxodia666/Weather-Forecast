@@ -1,10 +1,12 @@
 import React from "react";
-import { StyleSheet, View, Dimensions } from "react-native";
+import { StyleSheet, View, Dimensions, Text } from "react-native";
 import ImageBackgroundComponent from "../components/ImageBackgroundComponent";
 import routes from "../navigation/routes";
 import InputComponent from "../components/InputComponent";
 import { useDispatch } from "react-redux";
 import { loadWeather } from "../store/actions/weather";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Feather } from "@expo/vector-icons";
 
 const StartScreen = (props) => {
   const dispatch = useDispatch();
@@ -17,32 +19,14 @@ const StartScreen = (props) => {
     });
   };
   return (
-    <ImageBackgroundComponent style={styles.container}>
-      <InputComponent icon="md-add" handler={handler} />
+    <ImageBackgroundComponent>
+      <View>
+        <InputComponent icon="md-add" handler={handler} />
+       
+      </View>
     </ImageBackgroundComponent>
   );
 };
 export default StartScreen;
 
-const styles = StyleSheet.create({
-  inputContainer: {
-    backgroundColor: "white",
-    marginTop: 40,
-    padding: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    width: Dimensions.get("window").width * 0.8,
-    //height: Dimensions.get("window").height * 0.5,
-    borderRadius: 5,
-    overflow: "hidden",
-    elevation: 5,
-  },
-  textInput: {
-    padding: 3,
-    fontSize: 24,
-    borderBottomColor: "grey",
-    borderBottomWidth: 2,
-    width: "90%",
-    margin: 20,
-  },
-});
+const styles = StyleSheet.create({});

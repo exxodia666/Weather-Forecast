@@ -1,4 +1,4 @@
-import { BackHandler, Alert } from "react-native";
+import { BackHandler, Alert, Text } from "react-native";
 import Weather from "../components/Weather/Weather";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
@@ -16,113 +16,43 @@ import routes from "../navigation/routes";
 import InputComponent from "../components/InputComponent";
 
 const WeatherForecastScreen = (props) => {
+  const [isFetched, setIsFetched] = useState(false);
+  const weather = useSelector((state) => state.weather);
+  const settings = useSelector((state) => state.settings);
+  const cities = useSelector((state) => state.city);
   const dispatch = useDispatch();
 
-  const settings = useSelector((state) => state.settings);
-  const weather = useSelector((state) => state.weather);
-  const weatherLength = Object.keys(weather).length;
-  const [location, setLocation] = useState(null);
-  //  const [error, setError] = useState(null);
-
-  const [display, setDiplay] = useState(false);
-  const [isFetched, setIsFetched] = useState(false);
+  useEffect(() => {
+    console.log("useEffect2");
+    if (cities.length !== 0) {
+      fetchWeather(cities[0].city);
+    }
+  }, [cities]);
 
   useEffect(() => {
-    if (weatherLength !== 0)
-      props.navigation.setOptions({ title: weather.city });
+    console.log("useEffect2");
+    if (props.route.params) {
+      setIsFetched(true);
+    }
+  }, [props.route.params]);
+
+  useEffect(() => {
+    if (true) props.navigation.setOptions({ title: weather.city });
   }, [weather]);
-/*
-  const cityHandler = (city) => {
-    fetchWeatherCity(city);
-    if (weatherLength !== 0) {
-      dispatch(saveFirstLaunch(weather.city));
-    }
-  };
 
-  const fetchWeather = async (lat, lon) => {
-    "LOCATION: ", lat, " ", lon;
-    await dispatch(geoLoadForecast(lat, lon));
-    await dispatch(geoLoadWeather(lat, lon));
-    if (weatherLength) {
-      setIsFetched(true);
-      setDiplay(false);
-      setLocation(null);
-    }
-  };
-
-  const fetchWeatherCity = async (city) => {
-    await dispatch(loadForecast(city));
-    await dispatch(loadWeather(city));
-    if (weatherLength !== 0 && true) {
-      ("display");
-      setIsFetched(true);
-      setDiplay(false);
-    }
-    if (settings.firstLaunсh) {
-      dispatch(saveFirstLaunch(weather.city));
-    }
-  };
-
-  const getLocation = async () => {
-    Location.getCurrentPositionAsync({})
-      .then((res) => {
-        console.log(res);
-        setLocation({
-          lat: res.coords.latitude,
-          lon: res.coords.longitude,
-        });
-        console.log(location);
-      })
-      .catch((err) => {
-        // Alert.alert('You shold allow geolocation!')
-        const useLocation =
-          props.route.params !== undefined
-            ? props.route.params.useLocation
-            : false;
-        if (!useLocation) setDiplay(true);
-      });
-  };
-
-  useEffect(() => {
-    if (weatherLength == 0) {
-      if (settings.firstLaunсh) {
-        if (!settings.city) {
-          getLocation();
-          if (location) {
-            fetchWeather(location.lat, location.lon);
-            //if (weatherLength !== 0) {
-            dispatch(saveFirstLaunch(weather.city));
-            console.log(settings.city);
-            //rr }
-          } else {
-            //  Alert.alert("Error");
-          }
-        }
-      } else if (!settings.firstLaunсh) {
-        ("Fetching");
-        fetchWeatherCity(settings.city);
-        if (!weather.error && weather.error !== undefined) {
-          // (weather);
-        }
-      }
-    }
-    return () => {
-      setDiplay(false);
-      setIsFetched(false);
-      setLocation(null);
-    };
-  }, []);
-*/
-  //(weather);
-  if (display) {
-    return <InputComponent icon="md-search" handler={cityHandler} />;
-  }
-  if (weatherLength == 0) {
-    return <Loader />;
-  } else if (weatherLength !== 0) {
+  if (!isFetched) {
+    return (
+      <ImageBackgroundComponent
+        style={{ justifyContent: "center", alignItems: "center" }}
+      >
+        <Text style={{ fontSize: 24 }}>Add cities!!!</Text>
+      </ImageBackgroundComponent>
+    );
+  } else {
     return (
       <ImageBackgroundComponent>
         <Weather
+          touchable="disabled"
           confirmation={false}
           icon={weather.icon}
           temperature={countTemp(
