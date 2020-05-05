@@ -28,8 +28,16 @@ const WeatherForecastScreen = (props) => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
-    if (!weather.error) props.navigation.setOptions({ title: weather.city });
+    if (weatherLength !== 0)
+      props.navigation.setOptions({ title: weather.city });
   }, [weather]);
+/*
+  const cityHandler = (city) => {
+    fetchWeatherCity(city);
+    if (weatherLength !== 0) {
+      dispatch(saveFirstLaunch(weather.city));
+    }
+  };
 
   const fetchWeather = async (lat, lon) => {
     "LOCATION: ", lat, " ", lon;
@@ -75,15 +83,6 @@ const WeatherForecastScreen = (props) => {
       });
   };
 
-  //(weather);
-
-  const cityHandler = (city) => {
-    fetchWeatherCity(city);
-    if (weatherLength !== 0) {
-      dispatch(saveFirstLaunch(weather.city));
-    }
-  };
-
   useEffect(() => {
     if (weatherLength == 0) {
       if (settings.firstLaunсh) {
@@ -91,9 +90,10 @@ const WeatherForecastScreen = (props) => {
           getLocation();
           if (location) {
             fetchWeather(location.lat, location.lon);
-            if (weatherLength !== 0) {
-              dispatch(saveFirstLaunch(weather.city));
-            }
+            //if (weatherLength !== 0) {
+            dispatch(saveFirstLaunch(weather.city));
+            console.log(settings.city);
+            //rr }
           } else {
             //  Alert.alert("Error");
           }
@@ -111,32 +111,9 @@ const WeatherForecastScreen = (props) => {
       setIsFetched(false);
       setLocation(null);
     };
-  }, [location, weatherLength]);
-
-  useEffect(() => {
-    const useLocation =
-      props.route.params !== undefined ? props.route.params.useLocation : false;
-    console.log(useLocation);
-    if (useLocation) {
-      setIsFetched(false);
-      getLocation();
-      console.log(location);
-      if (location) {
-        fetchWeather(location.lat, location.lon);
-        if (weatherLength !== 0) {
-          setLocation(null);
-          props.navigation.setOptions({ useLocation: null });
-        }
-      }
-    }
-    return () => {
-      setIsFetched(true);
-      setDiplay(false);
-    };
-  }, [props.route.params, settings, weatherLength, location]);
-
-  //(display);
-
+  }, []);
+*/
+  //(weather);
   if (display) {
     return <InputComponent icon="md-search" handler={cityHandler} />;
   }
@@ -171,7 +148,41 @@ const WeatherForecastScreen = (props) => {
 };
 
 export default WeatherForecastScreen;
+/**
+
+
+  useEffect(() => {
+    const useLocation =
+      props.route.params !== undefined ? props.route.params.useLocation : false;
+    console.log(useLocation);
+    if (useLocation) {
+      setIsFetched(false);
+      getLocation();
+      console.log(location);
+      if (location) {
+        fetchWeather(location.lat, location.lon);
+        if (weatherLength !== 0) {
+          setLocation(null);
+          props.navigation.setOptions({ useLocation: null });
+        }
+      }
+    }
+    return () => {
+      setIsFetched(true);
+      setDiplay(false);
+    };
+  }, [props.route.params, settings, weatherLength, location]);
+
+  //(display);
+
+ */
+
 /*
+
+
+
+
+
 
 
   useEffect(() => {
