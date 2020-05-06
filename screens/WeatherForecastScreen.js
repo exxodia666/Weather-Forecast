@@ -1,45 +1,52 @@
 import { BackHandler, Alert, Text } from "react-native";
 import Weather from "../components/Weather/Weather";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { loadWeather, geoLoadWeather } from "../store/actions/weather";
+import { loadWeather } from "../store/actions/weather";
 import WeekForecast from "../components/WeekForecast";
 import { loadForecast, geoLoadForecast } from "../store/actions/forecast";
 import ImageBackgroundComponent from "../components/ImageBackgroundComponent";
 import Footer from "../components/Footer";
 import { countTemp } from "../constants/constants";
-import { saveFirstLaunch } from "../store/actions/settings";
-import Loader from "../components/Loader";
-import * as Location from "expo-location";
-import routes from "../navigation/routes";
-import InputComponent from "../components/InputComponent";
 
 const WeatherForecastScreen = (props) => {
   const [isFetched, setIsFetched] = useState(false);
   const weather = useSelector((state) => state.weather);
   const settings = useSelector((state) => state.settings);
   const cities = useSelector((state) => state.city);
+
   const dispatch = useDispatch();
 
+  const fetchWeather = async (cityName) => {
+    await dispatch(loadWeather(cityName));
+    await dispatch(loadForecast(cityName));
+    if (Object.keys(weather).length !== 0) setIsFetched(true);
+  };
+
   useEffect(() => {
-    console.log("useEffect2");
+    //console.log(cities);
     if (cities.length !== 0) {
       fetchWeather(cities[0].city);
     }
   }, [cities]);
 
   useEffect(() => {
-    console.log("useEffect2");
-    if (props.route.params) {
-      setIsFetched(true);
+    //console.log(props.route.params);
+    if (props.route.params !== undefined) {
+     // console.log(props.route.params);
+      setIsFetched(props.route.params.isFetched);
     }
-  }, [props.route.params]);
+  }, [props]);
 
   useEffect(() => {
-    if (true) props.navigation.setOptions({ title: weather.city });
+    if (Object.keys(weather).length !== 0) {
+      props.navigation.setOptions({ title: weather.city });
+     // console.log(weather);
+      setIsFetched(true);
+    }
   }, [weather]);
 
+  //console.log(isFetched);
   if (!isFetched) {
     return (
       <ImageBackgroundComponent
@@ -64,13 +71,13 @@ const WeatherForecastScreen = (props) => {
           wind={weather.wind}
           humidity={weather.humidity}
           description={weather.description}
-          fetchWeather={() => fetchWeatherCity(city)}
+          //fetchWeather={() => fetchWeatherCity(city)}
           fetchTime={weather.fetchTime}
         />
         <WeekForecast />
         <Footer
           fetchTime={weather.fetchTime}
-          fetchWeather={() => fetchWeatherCity(city)}
+          fetchWeather={() => fetchWeather(weather.city)}
         />
       </ImageBackgroundComponent>
     );

@@ -94,10 +94,6 @@ const Settings = (props) => {
             />
             <Text style={styles.text}>{units.Farenheit}</Text>
           </View>
-          <Text style={styles.text}>City: {settings.city}</Text>
-          <Text style={styles.text}>
-          First Launсh: {settings.firstLaunсh.toString()}
-          </Text>
           {/*}
           <View style={styles.row}>
             <Switch

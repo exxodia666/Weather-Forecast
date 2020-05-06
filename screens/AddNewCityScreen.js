@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { View, Text, Button, StyleSheet, Dimensions } from "react-native";
-import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import { Text, StyleSheet, Dimensions } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
-import { Ionicons, Feather } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { addCity } from "../store/actions/city";
 import ImageBackgroundComponent from "../components/ImageBackgroundComponent";
 import InputComponent from "../components/InputComponent";
 import * as Location from "expo-location";
 import Loader from "../components/Loader";
 import { geoLoadWeather } from "../store/actions/weather";
+import Axios from "axios";
+import { cityReqUrl, geoReqUrl } from "../constants/constants";
 
 const AddNewCityScreen = (props) => {
   const dispatch = useDispatch();
@@ -16,24 +18,26 @@ const AddNewCityScreen = (props) => {
   const [location, setLocation] = useState(null);
   const weather = useSelector((state) => state.weather.city);
 
-  const getLocation = async () => {
-    await Location.getCurrentPositionAsync({})
-      .then((res) => {
-        fetchWeather(res.coords.latitude, res.coords.longitude).then(() => {
-          dispatch(addCity(weather));
-          setLoading(false);
-          props.navigation.goBack();
-        });
-      })
-      .catch((err) => {});
+  const getLocation = () => {
+    //console.log("use location");
+    Location.getCurrentPositionAsync({}).then((res) => {
+      console.log(res);
+      return Axios.get(geoReqUrl(res.coords.latitude, res.coords.longitude))
+        .then((response) => {
+          console.log(response.data.name);
+          addCityHandler(response.data.name);
+        })
+        .catch((error) => {});
+    });
   };
 
-  const useLocation = async () => {
+  const useLocation = () => {
     setLoading(true);
-    await getLocation();
+    getLocation();
   };
 
   const fetchWeather = async (lat, lon) => {
+    // console.log(lat, " ", lon);
     await dispatch(geoLoadWeather(lat, lon));
   };
 

@@ -5,7 +5,6 @@ import routes from "./routes";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/CustomHeaderButton";
 //Screens
-import StartScreen from "../screens/StartScreen";
 import WeatherForecastScreen from "../screens/WeatherForecastScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import CitiesScreen from "../screens/CitiesScreen";
@@ -31,14 +30,7 @@ const WeatherStackNavigator = () => {
                     props.navigation.navigate(routes.Cities);
                   }}
                 />
-                {/*
-                <Item
-                  title="Search"
-                  iconName="md-search"
-                  onPress={() => {
-                    props.navigation.navigate(routes.Start);
-                  }}
-                />
+
                 {/*
                 <Item
                   title="Info"
@@ -95,19 +87,6 @@ const WeatherStackNavigator = () => {
           },
         })}
       />
-
-      <Stack.Screen
-        name={routes.Start}
-        component={StartScreen}
-        options={({ route }) => ({
-          title: "Search",
-          headerTintColor: "#fff",
-          headerTitleStyle: {
-            fontFamily: "comic-neue",
-          },
-        })}
-      />
-
       <Stack.Screen
         name={routes.AddNewCity}
         component={AddNewCityScreen}

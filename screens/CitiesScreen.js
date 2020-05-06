@@ -19,14 +19,13 @@ const CitiesScreen = (props) => {
   const settings = useSelector((state) => state.settings);
   
   useEffect(() => {
-    console.log('useEffect');
+   // console.log('useEffect');
     cities.forEach((item) => {
       dispatch(loadWeatherCity(item.city));
     });
   }, [cities]);
 
   const weatherOnPress = async (city) => {
-
     await dispatch(loadWeather(city));
     await dispatch(loadForecast(city));
     props.navigation.navigate(routes.Weather, { isFetched: true });
